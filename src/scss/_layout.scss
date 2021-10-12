@@ -5,22 +5,28 @@
 
 .logo {
   width: 14rem;
+  &--small {
+    width: 100%;
+    height: auto;
+  }
 }
 
 .navigation {
   background-image: linear-gradient($color-primary-light, $color-primary-dark);
-  padding: 2rem 1rem;
+  padding: 2.5rem 1rem;
   width: 25rem;
   display: flex;
   flex-flow: column;
   transition: all 0.2s;
   color: #fff;
   &--small {
-    width: 8rem;
+    width: 10rem;
+    padding: 2.5rem 0.5rem;
   }
 }
 
-.fullsize-menu {
+.fullsize-menu,
+.smallsize-menu {
   display: flex;
   align-items: center;
   flex-flow: column;
@@ -36,10 +42,18 @@
     padding: 1rem 2rem;
     transition: all 0.2s;
     &:hover {
-      background-color: #30b1e4;
+      background-color: $color-primary-light-1;
     }
-    & .menu-icon {
+    & .menu-icon--big {
       margin-right: 1rem;
+    }
+  }
+}
+
+.smallsize-menu {
+  &__item {
+    &:not(:last-child) {
+      margin-bottom: 2rem;
     }
   }
 }
