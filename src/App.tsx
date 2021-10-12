@@ -1,6 +1,6 @@
 import React from "react";
 // import { BrowserRouter as Router} from "react-router-dom";
-import { db } from "./firebaseConfig";
+import { db } from "./config/firebaseConfig";
 
 function App() {
   return (
