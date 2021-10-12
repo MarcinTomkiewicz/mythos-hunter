@@ -43,3 +43,7 @@
     }
   }
 }
+
+.footer {
+  @include flex-center;
+}

@@ -31,6 +31,9 @@ export const App = () => {
             </li>
           </ul>
         </div>
+        <footer className="footer">
+          <BsCaretLeftSquareFill className="menu-icon menu-icon--big" />
+        </footer>
       </nav>
     </main>
   );

@@ -3,9 +3,11 @@ ul {
 }
 
 .menu-icon {
+  cursor: pointer;
   &--small {
   }
 
   &--big {
+    size: 1.8rem;
   }
 }
