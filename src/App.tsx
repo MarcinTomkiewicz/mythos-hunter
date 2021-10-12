@@ -1,4 +1,5 @@
 import "./scss/main.scss";
+import { useState } from "react";
 import logo from "./img/Logo.png";
 import { GiAxeSword } from "react-icons/gi";
 import {
@@ -9,30 +10,51 @@ import {
 } from "react-icons/bs";
 
 export const App = () => {
+  const [isFullSizeMenu, setIsFullSizeMenu] = useState(true);
+  const toggleFullSizeMenu = () => {
+    setIsFullSizeMenu((prev) => !prev);
+  };
   return (
     <main className="main">
-      <nav className="navigation">
+      <nav
+        className={
+          isFullSizeMenu ? "navigation" : "navigation navigation--small"
+        }
+      >
         <div className="fullsize-menu">
           <img className="logo" alt="" src={logo} />
           <ul className="fullsize-menu__list">
             <li className="fullsize-menu__item">
-              <BsPersonFill className="menu-icon menu-icon--big" /> Widok
-              postaci
+              <BsPersonFill
+                size="1.8rem"
+                className="menu-icon menu-icon--big"
+              />{" "}
+              Widok postaci
             </li>
             <li className="fullsize-menu__item">
-              <BsBarChartFill className="menu-icon menu-icon--big" /> Statystyki
+              <BsBarChartFill
+                size="1.8rem"
+                className="menu-icon menu-icon--big"
+              />{" "}
+              Statystyki
             </li>
             <li className="fullsize-menu__item">
-              <GiAxeSword className="menu-icon menu-icon--big" /> Idź na
-              polowanie
+              <GiAxeSword size="1.8rem" className="menu-icon menu-icon--big" />{" "}
+              Idź na polowanie
             </li>
             <li className="fullsize-menu__item">
-              <BsChatFill className="menu-icon menu-icon--big" /> Czat
+              <BsChatFill size="1.8rem" className="menu-icon menu-icon--big" />{" "}
+              Czat
             </li>
           </ul>
         </div>
         <footer className="footer">
-          <BsCaretLeftSquareFill className="menu-icon menu-icon--big" />
+          <BsCaretLeftSquareFill
+            onClick={toggleFullSizeMenu}
+            size="1.8rem"
+            style={{ transform: !isFullSizeMenu ? "rotate(180deg)" : "" }}
+            className="menu-icon"
+          />
         </footer>
       </nav>
     </main>

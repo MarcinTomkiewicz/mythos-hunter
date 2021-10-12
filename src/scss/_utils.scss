@@ -4,10 +4,10 @@ ul {
 
 .menu-icon {
   cursor: pointer;
+  transition: all 0.1s;
   &--small {
   }
 
   &--big {
-    size: 1.8rem;
   }
 }
