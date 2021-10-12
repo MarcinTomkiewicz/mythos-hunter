@@ -1,0 +1,45 @@
+.main {
+  display: flex;
+  min-height: 100vh;
+}
+
+.logo {
+  width: 16rem;
+}
+
+.navigation {
+  background-image: linear-gradient($color-primary-light, $color-primary-dark);
+  padding: 2rem 1rem;
+  width: 25rem;
+  display: flex;
+  flex-flow: column;
+  transition: all 0.2s;
+  color: #fff;
+  &--small {
+    width: 8rem;
+  }
+}
+
+.fullsize-menu {
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  flex-grow: 1;
+  &__list {
+    margin-top: 5rem;
+  }
+  &__item {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 1rem 2rem;
+    transition: all 0.2s;
+    &:hover {
+      background-color: #30b1e4;
+    }
+    & .menu-icon {
+      margin-right: 1rem;
+    }
+  }
+}
