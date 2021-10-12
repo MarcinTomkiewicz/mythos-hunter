@@ -11,11 +11,12 @@ import {
 
 export const App = () => {
   const [isFullSizeMenu, setIsFullSizeMenu] = useState(true);
+  const [heading, setHeading] = useState("Wybór postaci");
   const toggleFullSizeMenu = () => {
     setIsFullSizeMenu((prev) => !prev);
   };
   return (
-    <main className="main">
+    <div className="wrapper">
       <nav
         className={
           isFullSizeMenu ? "navigation" : "navigation navigation--small"
@@ -57,6 +58,12 @@ export const App = () => {
           />
         </footer>
       </nav>
-    </main>
+      <main className="main">
+        <header className="header">
+          <h1 className="heading-primary">{heading}</h1>
+        </header>
+        <section className="content"></section>
+      </main>
+    </div>
   );
 };
