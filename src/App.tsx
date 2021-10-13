@@ -25,7 +25,7 @@ export const App = () => {
           <BsCaretLeftSquareFill
             onClick={toggleFullSizeMenu}
             size="1.8rem"
-            style={{ transform: !isFullSizeMenu ? "rotate(180deg)" : "" }}
+            style={{ transform: !isFullSizeMenu ? "scaleX(-1)" : "scaleX(1)" }}
             className="menu-icon"
           />
         </footer>
