@@ -9,7 +9,7 @@ import { BsCaretLeftSquareFill } from "react-icons/bs";
 export const App = () => {
   const [isFullSizeMenu, setIsFullSizeMenu] = useState(true);
   const [heading, setHeading] = useState("Wybór postaci");
-  const user = null;
+  const user = 123;
   const toggleFullSizeMenu = () => {
     setIsFullSizeMenu((prev) => !prev);
   };
@@ -20,7 +20,11 @@ export const App = () => {
           isFullSizeMenu ? "navigation" : "navigation navigation--small"
         }
       >
-        {isFullSizeMenu ? <FullSizeMenu /> : <SmallSizeMenu />}
+        {isFullSizeMenu ? (
+          <FullSizeMenu setHeading={setHeading} />
+        ) : (
+          <SmallSizeMenu setHeading={setHeading} />
+        )}
         <footer className="footer">
           <BsCaretLeftSquareFill
             onClick={toggleFullSizeMenu}
