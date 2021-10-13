@@ -74,6 +74,9 @@
   justify-content: space-between;
   background-color: $color-grey-light-2;
   padding: 2rem 3rem;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  z-index: 100;
+  position: relative;
 }
 
 .content {
@@ -126,5 +129,12 @@
     &:hover {
       background-color: $color-grey-light-4;
     }
+  }
+}
+
+.not-logged {
+  @include flex-center;
+  & .btn:first-child {
+    margin-right: 0.8rem;
   }
 }
