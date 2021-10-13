@@ -3,6 +3,7 @@ import { useState } from "react";
 import { SmallSizeMenu } from "./components/SmallSizeMenu";
 import { FullSizeMenu } from "./components/FullSizeMenu";
 import { UserLogged } from "./components/UserLogged";
+import { UserNotLogged } from "./components/UserNotLogged";
 import { BsCaretLeftSquareFill } from "react-icons/bs";
 
 export const App = () => {
@@ -32,7 +33,7 @@ export const App = () => {
       <main className="main">
         <header className="header">
           <h1 className="heading-primary">{heading}</h1>
-          {user ? <UserLogged /> : <UserLogged />}
+          {user ? <UserLogged /> : <UserNotLogged />}
         </header>
         <section className="content"></section>
       </main>
