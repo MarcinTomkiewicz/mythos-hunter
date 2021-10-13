@@ -22,6 +22,15 @@ export const UserLogged = () => {
         className="menu-icon"
         style={{ transform: isDropdownOpen ? "rotate(180deg)" : "" }}
       />
+      <div
+        className="dropdown"
+        style={{ display: isDropdownOpen ? "block" : "none" }}
+      >
+        <ul className="dropdown__list">
+          <li className="dropdown__item">Profil</li>
+          <li className="dropdown__item">Wyloguj</li>
+        </ul>
+      </div>
     </div>
   );
 };
