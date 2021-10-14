@@ -1,0 +1,140 @@
+.wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+.logo {
+  width: 14rem;
+  &--small {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.navigation {
+  background-image: linear-gradient($color-primary-light, $color-primary-dark);
+  padding: 2.5rem 1rem;
+  width: 25rem;
+  display: flex;
+  flex-flow: column;
+  transition: all 0.2s;
+  color: #fff;
+  &--small {
+    width: 10rem;
+    padding: 2.5rem 0.5rem;
+  }
+}
+
+.fullsize-menu,
+.smallsize-menu {
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  flex-grow: 1;
+  &__list {
+    margin-top: 5rem;
+  }
+  &__item {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 1rem 2rem;
+    transition: all 0.2s;
+    &:hover {
+      background-color: $color-primary-light-1;
+    }
+    & .menu-icon--big {
+      margin-right: 1rem;
+    }
+  }
+}
+
+.smallsize-menu {
+  &__item {
+    &:not(:last-child) {
+      margin-bottom: 2rem;
+    }
+  }
+}
+
+.footer {
+  @include flex-center;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $color-grey-light-2;
+  padding: 2rem 3rem;
+  box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+  z-index: 100;
+  position: relative;
+}
+
+.content {
+  padding: 2rem 3rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  background-color: $color-primary-light-2;
+}
+
+.user-profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  &__pic {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    border: 4px solid $color-grey-dark-1;
+    margin-right: 0.8rem;
+  }
+  &__credentials {
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    justify-content: center;
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-right: 1rem;
+  }
+}
+
+.dropdown {
+  display: none;
+  top: 130%;
+  right: 0;
+  position: absolute;
+  min-width: 15rem;
+  background-color: $color-grey-light-2;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  &__list {
+    list-style: none;
+    font-size: 1.4rem;
+  }
+  &__item {
+    padding: 1rem;
+    cursor: pointer;
+    &:hover {
+      background-color: $color-grey-light-4;
+    }
+  }
+}
+
+.not-logged {
+  @include flex-center;
+  & .btn:first-child {
+    margin-right: 0.8rem;
+  }
+}
