@@ -5,6 +5,7 @@ import { FullSizeMenu } from "./components/FullSizeMenu";
 import { UserLogged } from "./components/UserLogged";
 import { UserNotLogged } from "./components/UserNotLogged";
 import { BsCaretLeftSquareFill } from "react-icons/bs";
+import { db } from "./config/firebaseConfig";
 
 export const App = () => {
   const [isFullSizeMenu, setIsFullSizeMenu] = useState(true);
