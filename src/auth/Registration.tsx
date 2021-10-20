@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { auth, db } from "../config/firebaseConfig";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, collection, addDoc } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword } from "@firebase/auth";
 
 
- const createCharacter = async (uid, nickname) => {
+ const createCharacter = async (uid: string, nickname: string) => {
   await setDoc(doc(db, "users", uid), 
     {
       exp: 0,
@@ -50,7 +50,7 @@ import { getAuth, createUserWithEmailAndPassword } from "@firebase/auth";
     });
 };
       
-const createPlayerArmory = async (uid) => {
+const createPlayerArmory = async (uid: string) => {
     await setDoc(doc(db, "users", uid),
         {
             armory: {
@@ -71,7 +71,8 @@ export const Registration = () => {
 
     const { nickname, email, password, error } = user;
 
-    const handleChange = (e) => {
+    const handleChange = (e:any) => {
+        console.log(typeof e, "75")
         setUser({
             ...user,
             [e.target.name]: e.target.value,
@@ -80,17 +81,17 @@ export const Registration = () => {
         return user;
     };
 
-    const resetFormOnSubmit = (e) => {
+    const resetFormOnSubmit = (e:any) => {
         e.target.reset();
     };
 
     const translatedFirebaseErrors = {
         "auth/weak-password": "Hasło powinno mieć co najmniej 6 znaków.",
-        "auth/email-already-in-use": "Adres email jest już używany.",
+        "auth/email-already-in-use": "Adres email jest już używany." ,
         "auth/network-request-failed": "Brak połączenia z serwerem.",
     };
 
-    const createUser = async (e) => {
+    const createUser = async (e:boolean) => {
 
     const auth = getAuth();
     await createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
@@ -102,66 +103,57 @@ export const Registration = () => {
         });
         }
 
-    const checkUserNameInDb = async (username) => {
+    const checkUserNameInDb = async (username:string) => {
         
         const docRef = doc(db, "users", username);
         const docSnap = await getDoc(docRef);
     
+        console.log(docSnap.data(), 111)
+
         if (docSnap.exists()) {
-            console.log("Document data: ", docSnap.data());
+         
         } else {
             console.log("No such document!");
         }
 
     }
+    checkUserNameInDb("Zenek");
     
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e:any) => {
     e.preventDefault();
-    checkUserNameInDb(user.nickname)
-      .then((data) => {
-        if (!data.empty) {
-          setUser({
-            ...user,
-            error: {
-              message:
-                "Użytkownik o podanym nicku już istnieje! Wybierz inny nick.",
-            },
-          });
-          return;
-        }
-        createUser(e);
-      })
-      .catch((error) => console.error(error));
+      const docRef = await addDoc(collection(db, "users"), {
+          createUser();
+      });
   };
 
   return (
     <>
-      <div className="modal">
+      <div className="">
         <h2>Zarejestruj się</h2>
         <form
-          className="registration__form"
+          className=""
           id="signUp-form"
-          onSubmit={handleOnSubmit}
+        //   onSubmit={handleOnSubmit}
         >
-          <label htmlFor="nickname">
+          <label htmlFor="">
             Imię postaci:
             <input
               value={nickname}
               type="text"
-              className="form__input"
+              className="f"
               name="nickname"
               id="nickname"
               required
               onChange={handleChange}
             />
           </label>
-          <label htmlFor="signUp-email">
+          <label htmlFor="">
             Adres email:
             <input
               value={email}
               type="email"
-              className="form__input"
+              className=""
               name="email"
               autoComplete="username email"
               id="signUp-email"
@@ -169,12 +161,12 @@ export const Registration = () => {
               onChange={handleChange}
             />
           </label>
-          <label htmlFor="signUp-password">
+          <label htmlFor="">
             Hasło:
             <input
               value={password}
               type="password"
-              className="form__input"
+              className=""
               autoComplete="new-password"
               name="password"
               id="signUp-password"
@@ -182,18 +174,18 @@ export const Registration = () => {
               onChange={handleChange}
             />
           </label>
-          <button type="submit" className="btn btn-green">
+          <button type="submit" className="">
             Utwórz postać!
           </button>
         </form>
         <div className="user-action">
           Masz konto? <Link to="/login">Zaloguj się</Link>
         </div>
-        <div className="error">
+        {/* <div className="error">
           {error && (
             <p>{translatedFirebaseErrors[error.code] || error.message}</p>
           )}
-        </div>
+        </div> */}
       </div>
     </>
   );
