@@ -1,18 +1,17 @@
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "firebase/app";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyBQl0PBG6I7ZZsmXH9gaxxm21e5HpJc3V8",
-    authDomain: "mythos-hunter-75af2.firebaseapp.com",
-    projectId: "mythos-hunter-75af2",
-    storageBucket: "mythos-hunter-75af2.appspot.com",
-    messagingSenderId: "577680113403",
-    appId: "1:577680113403:web:77f797193fb2260575fa5e"
-  };
-
-  // Initialize Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyBOuayvzGN7bBFXnRxxevI9jokaZXepGrM",
+  authDomain: "mythos-hunter.firebaseapp.com",
+  projectId: "mythos-hunter",
+  storageBucket: "mythos-hunter.appspot.com",
+  messagingSenderId: "750542805011",
+  appId: "1:750542805011:web:24e1ba0189b3b1710707e6",
+  measurementId: "G-48KK8S4E5E",
+};  // Initialize Firebase e
 export const app = initializeApp(firebaseConfig);
-  export const db = firebase.firestore();
+// firebase.analytics();
+export const auth = getAuth();
+export const db = getFirestore(app);
