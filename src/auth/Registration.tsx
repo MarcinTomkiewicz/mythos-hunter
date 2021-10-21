@@ -51,12 +51,10 @@ import { getAuth, createUserWithEmailAndPassword } from "@firebase/auth";
 };
       
 const createPlayerArmory = async (uid: string) => {
-    await setDoc(doc(db, "users", uid),
-        {
-            armory: {
-            
-        }
-    })
+
+  const testUser = doc(db, `users/${uid}`);
+  await addDoc(collection(testUser, "armory"),{})
+  console.log(testUser);
 }
 
 
@@ -72,7 +70,6 @@ export const Registration = () => {
     const { nickname, email, password, error } = user;
 
     const handleChange = (e:any) => {
-        console.log(typeof e, "75")
         setUser({
             ...user,
             [e.target.name]: e.target.value,
@@ -91,40 +88,44 @@ export const Registration = () => {
         "auth/network-request-failed": "Brak połączenia z serwerem.",
     };
 
-    const createUser = async (e:boolean) => {
+    const createUser = () => {
 
     const auth = getAuth();
-    await createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
-        const user = userCredential.user;
-    })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-        });
-        }
-
-    const checkUserNameInDb = async (username:string) => {
+      createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
         
-        const docRef = doc(db, "users", username);
-        const docSnap = await getDoc(docRef);
-    
-        console.log(docSnap.data(), 111)
+        const user = userCredential.user;
+        console.log(user.uid);
+        // return user;
+        createCharacter(user.uid, nickname);
+        createPlayerArmory(user.uid);
+      })
 
-        if (docSnap.exists()) {
-         
-        } else {
-            console.log("No such document!");
-        }
-
+        // .catch((error) => {
+        //     const errorCode = error.code;
+        //     const errorMessage = error.message;
+        // });
     }
-    checkUserNameInDb("Zenek");
+
+    // const checkUserNameInDb = async (username:string) => {
+        
+    //     const docRef = doc(db, "users", username);
+    //     const docSnap = await getDoc(docRef);
+    
+    //     console.log(docSnap.data(), 111)
+
+    //     if (docSnap.exists()) {
+         
+    //     } else {
+    //         console.log("No such document!");
+    //     }
+
+    // }
+    // checkUserNameInDb("Zenek");
     
 
   const handleOnSubmit = async (e:any) => {
     e.preventDefault();
-      const docRef = await addDoc(collection(db, "users"), {
-          createUser();
-      });
+      createUser();
   };
 
   return (
@@ -134,7 +135,7 @@ export const Registration = () => {
         <form
           className=""
           id="signUp-form"
-        //   onSubmit={handleOnSubmit}
+          onSubmit={handleOnSubmit}
         >
           <label htmlFor="">
             Imię postaci:
