@@ -1,5 +1,5 @@
 import "./scss/main.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SmallSizeMenu } from "./components/SmallSizeMenu";
 import { FullSizeMenu } from "./components/FullSizeMenu";
 import { UserLogged } from "./components/UserLogged";
@@ -15,6 +15,15 @@ export const App = () => {
   const toggleFullSizeMenu = () => {
     setIsFullSizeMenu((prev) => !prev);
   };
+
+  const language = useLanguagePacks()
+
+console.log(language);
+
+
+
+
+  
   return (
     <div className="wrapper">
       <nav
