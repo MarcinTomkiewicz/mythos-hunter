@@ -18,7 +18,7 @@ export const App = () => {
 
   const language = useLanguagePacks()
 
-console.log(language);
+console.log(language.buildings?.theater[0]);
 
 
 
