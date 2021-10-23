@@ -5,15 +5,17 @@ import { FullSizeMenu } from "./components/FullSizeMenu";
 import { UserLogged } from "./components/UserLogged";
 import { UserNotLogged } from "./components/UserNotLogged";
 import { BsCaretLeftSquareFill } from "react-icons/bs";
-import { db } from "./config/firebaseConfig";
+import { useUser } from "./hooks/useUser";
 
 export const App = () => {
   const [isFullSizeMenu, setIsFullSizeMenu] = useState(true);
   const [heading, setHeading] = useState("Wybór postaci");
-  const user = 123;
+  const user = useUser();
+
   const toggleFullSizeMenu = () => {
     setIsFullSizeMenu((prev) => !prev);
   };
+
   return (
     <div className="wrapper">
       <nav
