@@ -8,27 +8,26 @@ export const useLanguagePacks = () => {
 
   useEffect(() => {
     const getPackNames = async () => {
-      const q = query(collection(db, "language_packs"));
-      const testArray: string[] = [];
-      const documents = await getDocs(q);
-      documents.docs.forEach((doc) => {
-        testArray.push(doc.id);
+      const collectDataFromDB = query(collection(db, "language_packs"));
+      const dataFromDB: string[] = [];
+      const documents = await getDocs(collectDataFromDB);
+      documents.docs.forEach((document) => {
+        dataFromDB.push(document.id);
       });
-      setPackNames(testArray);
+      setPackNames(dataFromDB);
     };
     getPackNames();
   }, []);
 
   useEffect(() => {
-    const tempLanguageArray: any = [];
+    const languageArrays: any = [];
     packNames.forEach((document) => {
       const getLanguagesFromDB = async () => {
         const docRef = doc(db, "language_packs", document);
         const docSnap = await getDoc(docRef);
-        tempLanguageArray.push([document, docSnap.data()]);
-        setLanguagePacks(Object.fromEntries(tempLanguageArray));
+        languageArrays.push([document, docSnap.data()]);
+        setLanguagePacks(Object.fromEntries(languageArrays));
       };
-
       getLanguagesFromDB();
     });
   }, [packNames]);
