@@ -1,19 +1,32 @@
 import "./scss/main.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SmallSizeMenu } from "./components/SmallSizeMenu";
 import { FullSizeMenu } from "./components/FullSizeMenu";
 import { UserLogged } from "./components/UserLogged";
 import { UserNotLogged } from "./components/UserNotLogged";
 import { BsCaretLeftSquareFill } from "react-icons/bs";
-import { db } from "./config/firebaseConfig";
+import { useLanguagePacks } from "./hooks/useLanguagePacks"
 
 export const App = () => {
+  const language = useLanguagePacks();
+  
   const [isFullSizeMenu, setIsFullSizeMenu] = useState(true);
-  const [heading, setHeading] = useState("Wybór postaci");
+  const [heading, setHeading] = useState("");
+
+  useEffect(() => {
+    if (language.headers === undefined) {      
+      setHeading("🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣");
+    }
+    else {
+      return setHeading(language.headers?.character_view[0]);
+    }
+  }, [language])  
+
   const user = 123;
   const toggleFullSizeMenu = () => {
     setIsFullSizeMenu((prev) => !prev);
   };
+
   return (
     <div className="wrapper">
       <nav
