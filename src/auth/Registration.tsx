@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { auth, db } from "../config/firebaseConfig";
-import { doc, setDoc, getDoc, collection, addDoc } from "firebase/firestore";
+import { Link } from "react-router-dom";
+import { db } from "../config/firebaseConfig";
+import { doc, setDoc, collection,getDocs, addDoc, query, where } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword } from "@firebase/auth";
 
 
@@ -54,78 +54,92 @@ const createPlayerArmory = async (uid: string) => {
 
   const testUser = doc(db, `users/${uid}`);
   await addDoc(collection(testUser, "armory"),{})
-  console.log(testUser);
 }
 
 
 export const Registration = () => {
-    const [user, setUser] = useState({
-        nickname: "",
-        email: "",
-        password: "",
-        error: "",
+  const [user, setUser] = useState({
+    nickname: "",
+    email: "",
+    password: "",
+    error: "",
+  });
+  
+
+  const { nickname, email, password} = user;
+
+  const handleChange = (e: any) => {
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value,
+      error: "",
     });
-    const history = useHistory();
+    return user;
+  };
 
-    const { nickname, email, password, error } = user;
+  // const resetFormOnSubmit = (e: any) => {
+  //   e.target.reset();
+  // };
 
-    const handleChange = (e:any) => {
-        setUser({
-            ...user,
-            [e.target.name]: e.target.value,
-            error: "",
-        });
-        return user;
-    };
+  // const translatedFirebaseErrors = {
+  //   "auth/weak-password": "Hasło powinno mieć co najmniej 6 znaków.",
+  //   "auth/email-already-in-use": "Adres email jest już używany.",
+  //   "auth/network-request-failed": "Brak połączenia z serwerem.",
+  // };
+  const [verifiedUser, setVerifiedUser] = useState<Boolean>(false);
 
-    const resetFormOnSubmit = (e:any) => {
-        e.target.reset();
-    };
+  const checkUserNameInDb = async (username:string) => {
+    const existingUser = query(collection(db, "users"));
+    // ,where("name", "==", username));
+    // alert(`Uzytkownik o nicku ${username} juz istnieje! Wybierz inną nazwę gracza.`);
+    const allUsers = await getDocs(existingUser);
+    
+      allUsers.docs.forEach(user => {
+        console.log(typeof username, typeof user.data().name)
+        if (username === user.data().name) {
+          return setVerifiedUser(true);
+        } else {
+          console.log("halo, jestes Tu?");
+          return setVerifiedUser(false);
+        }
 
-    const translatedFirebaseErrors = {
-        "auth/weak-password": "Hasło powinno mieć co najmniej 6 znaków.",
-        "auth/email-already-in-use": "Adres email jest już używany." ,
-        "auth/network-request-failed": "Brak połączenia z serwerem.",
-    };
+      });
+    
+    console.log(verifiedUser);
 
-    const createUser = () => {
+    console.log(allUsers.docs);
+    
+  }
+
+  const createUser = () => {
 
     const auth = getAuth();
-      createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
-        
-        const user = userCredential.user;
-        console.log(user.uid);
-        // return user;
-        createCharacter(user.uid, nickname);
-        createPlayerArmory(user.uid);
-      })
+    createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
+      const user = userCredential.user;
 
-        // .catch((error) => {
-        //     const errorCode = error.code;
-        //     const errorMessage = error.message;
-        // });
-    }
+      console.log(116, email, password, user, user.uid, nickname);
 
-    // const checkUserNameInDb = async (username:string) => {
-        
-    //     const docRef = doc(db, "users", username);
-    //     const docSnap = await getDoc(docRef);
-    
-    //     console.log(docSnap.data(), 111)
+      createCharacter(user.uid, nickname);
+      createPlayerArmory(user.uid);
+    }).catch((error) => {
+      setUser({
+        ...user,
+        error,
+      });
+    });
+  };
 
-    //     if (docSnap.exists()) {
-         
-    //     } else {
-    //         console.log("No such document!");
-    //     }
-
-    // }
-    // checkUserNameInDb("Zenek");
     
 
   const handleOnSubmit = async (e:any) => {
     e.preventDefault();
+    checkUserNameInDb(nickname);
+    if (verifiedUser === false) {
       createUser();
+    } else {
+      console.log("user istnieje");
+    }
+    console.log(verifiedUser);
   };
 
   return (
