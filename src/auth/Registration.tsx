@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import { db } from "../config/firebaseConfig";
 import { doc, setDoc, collection,getDocs, addDoc, query } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword } from "@firebase/auth";
-
-const language = useLanguagePacks();
+import { useLanguagePacks } from "../hooks/useLanguagePacks";
 
 
  const createCharacter = async (uid: string, nickname: string) => {
@@ -63,6 +62,7 @@ const createPlayerArmory = async (uid: string) => {
 
 
 export const Registration = () => {
+  const language = useLanguagePacks();
   const [user, setUser] = useState({
     nickname: "",
     email: "",
@@ -104,7 +104,7 @@ export const Registration = () => {
 
       });
   }
-
+  
   const createUser = (e: any) => {
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
@@ -136,14 +136,14 @@ export const Registration = () => {
   return (
     <>
       <div className="">
-        <h2>Zarejestruj się</h2>
+        <h2>{language.headers?.registration[0]}</h2>
         <form
           className=""
           id="signUp-form"
           onSubmit={handleOnSubmit}
         >
           <label htmlFor="">
-            Imię postaci:
+            {language.labels?.char_name[0]}:
             <input
               value={nickname}
               type="text"
@@ -155,7 +155,7 @@ export const Registration = () => {
             />
           </label>
           <label htmlFor="">
-            Adres email:
+            {language.labels?.email[0]}:
             <input
               value={email}
               type="email"
@@ -168,7 +168,7 @@ export const Registration = () => {
             />
           </label>
           <label htmlFor="">
-            Hasło:
+            {language.labels?.password[0]}:
             <input
               value={password}
               type="password"
@@ -181,7 +181,7 @@ export const Registration = () => {
             />
           </label>
           <button type="submit" className="">
-            Utwórz postać!
+            {language.buttons?.create_char[0]}!
           </button>
         </form>
         <div className="user-action">
