@@ -4,16 +4,20 @@ import { db } from "../config/firebaseConfig";
 import { doc, setDoc, collection,getDocs, addDoc, query } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword } from "@firebase/auth";
 
+const language = useLanguagePacks();
+
 
  const createCharacter = async (uid: string, nickname: string) => {
   await setDoc(doc(db, "users", uid), 
     {
       exp: 0,
+      character_points: 0,
       language: 0,
       level: 1,
       nextLevel: 100,
-      isOnline: true,
+      is_online: true,
       name: nickname,
+      gender: "none",
       role: "player",
       uid,
       nationality: "none",
@@ -31,8 +35,9 @@ import { getAuth, createUserWithEmailAndPassword } from "@firebase/auth";
       },
       resources: {
         gold: 100,
-        material: 50,
+        marble: 50,
         wood: 50,
+        workers: 50,
         },
         buildings: {
             agora: 1,
@@ -86,17 +91,15 @@ export const Registration = () => {
   //   "auth/email-already-in-use": "Adres email jest już używany.",
   //   "auth/network-request-failed": "Brak połączenia z serwerem.",
   // };
-  const [verifiedUser, setVerifiedUser] = useState<Boolean>(false);
+  const [usernameExists, setUsernameExists] = useState<Boolean>(false);
 
   const checkUserNameInDb = async (username:string) => {
     const existingUser = query(collection(db, "users"));
     const allUsers = await getDocs(existingUser);
     
-      allUsers.docs.forEach(user => {
+    allUsers.docs.forEach(user => {
         if (username === user.data().name) {
-          return setVerifiedUser(true);
-        } else {
-          return setVerifiedUser(false);
+          return setUsernameExists(true);
         }
 
       });
@@ -117,19 +120,17 @@ export const Registration = () => {
       });
   };
 
-    
 
   const handleOnSubmit = async (e:any) => {
     e.preventDefault();
+    console.log(124, usernameExists)
     checkUserNameInDb(user.nickname);
-      if (verifiedUser === true) {
-        createUser(e);
-      } else {
+      if (usernameExists === true) {
         alert(`Uzytkownik o nazwie ${nickname} juz istnieje! Wybierz inną nazwę!`)
+      } else {
+        createUser(e);
       }
-
-    
-    
+    setUsernameExists(false);
   };
 
   return (
