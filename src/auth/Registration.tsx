@@ -185,7 +185,7 @@ export const Registration = () => {
           </button>
         </form>
         <div className="user-action">
-          Masz konto? <Link to="/login">Zaloguj się</Link>
+          Masz konto? <Link to="/login">{language.labels?.log_in[0]}</Link>
         </div>
         {/* <div className="error">
           {error && (
