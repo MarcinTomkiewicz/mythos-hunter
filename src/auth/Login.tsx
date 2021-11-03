@@ -5,6 +5,7 @@ import {
 import { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useLanguagePacks } from "../hooks/useLanguagePacks";
+import { CheckIfLogged } from "../hooks/useUser";
 
 const resetFormOnSubmit = (e:any) => {
   e.target.reset();
@@ -48,7 +49,8 @@ export const Login = () => {
           resetFormOnSubmit(e);
           const user = userCredential.user;
 
-          console.log(user);
+        console.log(user);
+        CheckIfLogged();
       }).catch((error) => {
           setUser({
               ...user,
