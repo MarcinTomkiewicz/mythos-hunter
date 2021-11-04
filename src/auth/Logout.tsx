@@ -10,7 +10,7 @@ export const Logout = () => {
     const auth = getAuth();
     signOut(auth)
       .then(() => {
-        console.log("wylogowany poprawnie");
+        console.log(user.name + "wylogowany poprawnie");
       })
       .catch((error) => {
         console.log("error");

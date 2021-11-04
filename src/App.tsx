@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { Registration } from "./auth/Registration";
 import "./scss/main.scss";
 import { useEffect, useState } from "react";
 import { SmallSizeMenu } from "./components/SmallSizeMenu";
@@ -9,15 +8,15 @@ import { UserLogged } from "./components/UserLogged";
 import { UserNotLogged } from "./components/UserNotLogged";
 import { BsCaretLeftSquareFill } from "react-icons/bs";
 import { useLanguagePacks } from "./hooks/useLanguagePacks";
-import { Login } from "./auth/Login";
 import { useLoader } from "./hooks/useLoader";
 import { useUser } from "./hooks/useUser";
-import { Logout } from "./auth/Logout";
+import { useRouter } from "./hooks/useRouter";
 
 export const App = () => {
   const user = useUser();
   const language = useLanguagePacks();
   const loader = useLoader();
+  const currentRouter = useRouter();
 
   const [isFullSizeMenu, setIsFullSizeMenu] = useState(true);
   const [heading, setHeading] = useState<any>("");
@@ -62,14 +61,17 @@ export const App = () => {
         </header>
         <section className="content">
           <Router>
-            {user === null ? (
+            {currentRouter.map((router) => {
+              return router;
+            })}
+            {/* {user === null ? (
               <>
                 <Registration />
                 <Login />
               </>
             ) : (
-              <Logout />
-            )}
+              ""
+            )} */}
           </Router>
         </section>
       </main>
