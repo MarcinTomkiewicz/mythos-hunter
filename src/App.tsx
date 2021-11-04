@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router} from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { Registration } from "./auth/Registration";
 import "./scss/main.scss";
 import { useEffect, useState } from "react";
@@ -8,28 +8,28 @@ import { FullSizeMenu } from "./components/FullSizeMenu";
 import { UserLogged } from "./components/UserLogged";
 import { UserNotLogged } from "./components/UserNotLogged";
 import { BsCaretLeftSquareFill } from "react-icons/bs";
-import { useLanguagePacks } from "./hooks/useLanguagePacks"
+import { useLanguagePacks } from "./hooks/useLanguagePacks";
 import { Login } from "./auth/Login";
 import { useLoader } from "./hooks/useLoader";
-
+import { useUser } from "./hooks/useUser";
+import { Logout } from "./auth/Logout";
 
 export const App = () => {
+  const user = useUser();
   const language = useLanguagePacks();
   const loader = useLoader();
-  
+
   const [isFullSizeMenu, setIsFullSizeMenu] = useState(true);
   const [heading, setHeading] = useState<any>("");
 
   useEffect(() => {
-    if (language.headers === undefined) {      
+    if (language.headers === undefined) {
       setHeading(loader);
-    }
-    else {
+    } else {
       return setHeading(language.headers?.character_view[0]);
     }
-  }, [language, loader])  
+  }, [language, loader]);
 
-  const user = 123;
   const toggleFullSizeMenu = () => {
     setIsFullSizeMenu((prev) => !prev);
   };
@@ -61,9 +61,15 @@ export const App = () => {
           {user ? <UserLogged /> : <UserNotLogged />}
         </header>
         <section className="content">
-           <Router>
-            <Registration />
-            <Login />
+          <Router>
+            {user === null ? (
+              <>
+                <Registration />
+                <Login />
+              </>
+            ) : (
+              <Logout />
+            )}
           </Router>
         </section>
       </main>

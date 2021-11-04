@@ -1,18 +1,25 @@
-import { doc, getDoc } from "@firebase/firestore";
-import { getAuth, onAuthStateChanged } from "@firebase/auth";
+import { useEffect, useState } from "react";
+import { auth, db } from "../config/firebaseConfig";
+import { doc, onSnapshot } from "firebase/firestore";
+import { User } from "@firebase/auth";
 
+export const useUser = () => {
+  const [user, setUser] = useState<any>(null);
+  const [token, setToken] = useState<User | null>(null);
 
-export const CheckIfLogged = () => {
+  useEffect(() => {
+    return auth.onAuthStateChanged(setToken);
+  }, []);
 
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            const uid = user.uid;
-            console.log(uid);
-        };
-        // } else {
-        //     console.log("Frytki");
-        // };
+  useEffect(() => {
+    if (token === null) {
+      setUser(null);
+      return;
+    }
+    return onSnapshot(doc(db, "users", token.uid), (doc) => {
+      setUser({ uid: token.uid, ...doc.data() });
     });
+  }, [token]);
 
+  return user;
 };
