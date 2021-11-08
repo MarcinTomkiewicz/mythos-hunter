@@ -1,4 +1,5 @@
+import Loader from "react-loader-spinner";
+
 export const useLoader = () => {
-    const loaderImage: string = "loader2.gif";
-    return <img src={process.env.PUBLIC_URL + `/img/${loaderImage}`} style={{ width: "40px",height: "40px"}} alt="Loading" />
-}
+  return <Loader type="BallTriangle" color="#00BFFF" height={40} width={40} />;
+};

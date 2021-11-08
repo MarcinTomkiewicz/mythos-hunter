@@ -1,28 +1,23 @@
-import {
-    Link,
-    // useHistory
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { useLanguagePacks } from "../hooks/useLanguagePacks";
+import { useLanguagePacks } from "../../hooks/useLanguagePacks";
 
-const resetFormOnSubmit = (e:any) => {
+const resetFormOnSubmit = (e: any) => {
   e.target.reset();
 };
 
 export const Login = () => {
-    const language = useLanguagePacks();
+  const language = useLanguagePacks();
   const [user, setUser] = useState({
     email: "",
     password: "",
     error: "",
   });
 
-//   const history = useHistory();
+  const { email, password } = user;
 
-  const { email, password} = user;
-
-  const handleChange = (e:any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser({
       ...user,
       [e.target.name]: e.target.value,
@@ -31,29 +26,23 @@ export const Login = () => {
     return user;
   };
 
-//   const translatedFirebaseErrors = {
-//     "auth/user-not-found":
-//       "Próbowano się zalogować do nieistniejącego konta. Przyczyn może być wiele: takiego konta nigdy nie było lub istniało, ale zostało skasowane.",
-//     "auth/too-many-requests":
-//       "Dostęp do konta został tymczasowo ograniczony z powodu wielokrotnych nieudanych prób zalogowania. Możesz odzyskać dostęp poprzez zresetowanie hasła albo spróbuj zalogować się później.",
-//     "auth/wrong-password": "Podane hasło jest błędne.",
-//   };
+  const handleOnSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault();
 
-  const handleOnSubmit = (e:any) => {
-      e.preventDefault();
-      
-      const auth = getAuth();
+    const auth = getAuth();
 
-      signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
-          resetFormOnSubmit(e);
-          const user = userCredential.user;
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        resetFormOnSubmit(e);
+        const user = userCredential.user;
 
         console.log(user);
-      }).catch((error) => {
-          setUser({
-              ...user,
-              error,
-          });
+      })
+      .catch((error) => {
+        setUser({
+          ...user,
+          error,
+        });
       });
   };
 
@@ -96,13 +85,9 @@ export const Login = () => {
         </form>
 
         <div className="user-action">
-          Nie masz konta? <Link to="/register">{language.buttons?.create_char[0]}</Link>
+          Nie masz konta?{" "}
+          <Link to="/register">{language.buttons?.create_char[0]}</Link>
         </div>
-        {/* <div className="error">
-          {error && (
-            <p>{translatedFirebaseErrors[error.code] || error.message}</p>
-          )}
-        </div> */}
       </div>
     </>
   );

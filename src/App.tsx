@@ -61,8 +61,8 @@ export const App = () => {
         </header>
         <section className="content">
           <Router>
-            {currentRouter.map((router) => {
-              return router;
+            {currentRouter.map((router, i) => {
+              return <span key={i}>{router}</span>;
             })}
             {/* {user === null ? (
               <>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Logout } from "../auth/Logout";
-import { Registration } from "../auth/Registration";
-import { Login } from "../auth/Login";
+import { Logout } from "../components/auth/Logout";
+import { Registration } from "../components/auth/Registration";
+import { Login } from "../components/auth/Login";
 import { useUser } from "./useUser";
 
 export const useRouter = () => {
@@ -9,12 +9,10 @@ export const useRouter = () => {
   const [currentRouter, setCurrentRouter] = useState<any[]>([]);
 
   useEffect(() => {
-    const userRouter = [<Logout />];
-    const nonUserRouter = [<Login />, <Registration />];
     if (user === null) {
-      setCurrentRouter(nonUserRouter);
+      setCurrentRouter([<Login />, <Registration />]);
     } else {
-      setCurrentRouter(userRouter);
+      setCurrentRouter([<Logout />]);
     }
   }, [user]);
   return currentRouter;

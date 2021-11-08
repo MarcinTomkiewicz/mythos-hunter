@@ -1,6 +1,6 @@
 import { getAuth, signOut } from "firebase/auth";
-import { useLanguagePacks } from "../hooks/useLanguagePacks";
-import { useUser } from "../hooks/useUser";
+import { useLanguagePacks } from "../../hooks/useLanguagePacks";
+import { useUser } from "../../hooks/useUser";
 
 export const Logout = () => {
   const user = useUser();

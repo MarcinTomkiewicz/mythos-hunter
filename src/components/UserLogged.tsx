@@ -2,7 +2,7 @@ import { BsChevronDown } from "react-icons/bs";
 import { useState } from "react";
 import { useUser } from "../hooks/useUser";
 import { useLanguagePacks } from "../hooks/useLanguagePacks";
-import { Logout } from "../auth/Logout";
+import { Logout } from "./auth/Logout";
 
 export const UserLogged = () => {
   const user = useUser();
