@@ -6,9 +6,11 @@ import { UserLogged } from "./components/UserLogged";
 import { UserNotLogged } from "./components/UserNotLogged";
 import { BsCaretLeftSquareFill } from "react-icons/bs";
 import { useLanguagePacks } from "./hooks/useLanguagePacks"
+import { useLanguageSettings } from "./hooks/useLanguageSettings";
 
 export const App = () => {
   const language = useLanguagePacks();
+  const langCode = useLanguageSettings();
   
   const [isFullSizeMenu, setIsFullSizeMenu] = useState(true);
   const [heading, setHeading] = useState("");
@@ -18,9 +20,9 @@ export const App = () => {
       setHeading("🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣");
     }
     else {
-      return setHeading(language.headers?.character_view[0]);
+      return setHeading(language.headers?.character_view[langCode]);
     }
-  }, [language])  
+  }, [language, langCode])  
 
   const user = 123;
   const toggleFullSizeMenu = () => {
