@@ -9,8 +9,20 @@
   padding: 2rem;
 }
 
+.logo-container {
+  flex-grow: 1;
+  @include flex-center;
+}
+
 .logo {
   width: 22rem;
+  margin-left: 15rem;
+}
+
+.user-profile {
+  & .btn--ghost {
+    margin-right: 1rem;
+  }
 }
 
 .wrapper {
