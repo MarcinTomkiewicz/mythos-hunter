@@ -17,4 +17,11 @@ body {
   line-height: 1.6;
   font-weight: 300;
   color: $color-grey-dark-1;
+  background-image: url("../img/background.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: grid;
+  place-items: center;
+  height: 100vh;
 }
