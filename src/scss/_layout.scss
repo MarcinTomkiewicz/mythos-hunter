@@ -1,10 +1,8 @@
 .main {
   width: 80vw;
-  border: 1px solid red;
 }
 
 .header {
-  border: 1px solid blueviolet;
   @include flex-center;
   padding: 2rem;
 }
@@ -15,7 +13,7 @@
 }
 
 .logo {
-  width: 22rem;
+  width: 20rem;
   margin-left: 15rem;
 }
 
@@ -34,18 +32,19 @@
 .left-panel {
   width: 20%;
   margin-right: 2rem;
-  border: 1px solid green;
-  &__join {
-    margin-bottom: 2rem;
-  }
-  &__join,
-  &__extras {
+  &__box {
     background-color: $color-white;
+    padding: 1rem;
+    &:not(:last-child) {
+      margin-bottom: 2rem;
+    }
   }
 }
 
 .content {
   width: 80%;
-  border: 1px solid pink;
   background-color: $color-white;
+  &__wrapper {
+    padding: 1rem;
+  }
 }
