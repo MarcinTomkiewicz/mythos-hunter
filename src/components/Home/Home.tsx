@@ -5,7 +5,7 @@ const Home: FunctionComponent = () => {
   return (
     <>
       <TopBar title="Home" />
-      <div>
+      <div className="content__wrapper">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore modi
         fuga tenetur quidem voluptatem distinctio voluptas a libero eveniet enim
         debitis excepturi perspiciatis rerum, aliquid obcaecati esse soluta

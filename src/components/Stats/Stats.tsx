@@ -1,10 +1,10 @@
 import { FunctionComponent } from "react";
 import TopBar from "../atoms/TopBar/TopBar";
 
-export const Chat: FunctionComponent = () => {
+const Stats: FunctionComponent = () => {
   return (
     <>
-      <TopBar title="Chat" />
+      <TopBar title="Statystyki" />
       <div className="content__wrapper">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore modi
         fuga tenetur quidem voluptatem distinctio voluptas a libero eveniet enim
@@ -15,4 +15,4 @@ export const Chat: FunctionComponent = () => {
   );
 };
 
-export default Chat;
+export default Stats;
