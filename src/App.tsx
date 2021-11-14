@@ -2,7 +2,7 @@ import "./scss/main.scss";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import Character from "./components/Character/Character";
-import Stats from "./Stats/Stats";
+import Stats from "./components/Stats/Stats";
 import Home from "./components/Home/Home";
 import NotFound from "./components/NotFound/NotFound";
 import Chat from "./components/Chat/Chat";
