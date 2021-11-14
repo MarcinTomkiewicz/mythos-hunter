@@ -3,7 +3,6 @@ import { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useLanguagePacks } from "../../hooks/useLanguagePacks";
 import { useLanguageSettings } from "../../hooks/useLanguageSettings";
-import { useLoader } from "../../hooks/useLoader";
 
 const resetFormOnSubmit = (e: any) => {
   e.target.reset();
@@ -12,7 +11,6 @@ const resetFormOnSubmit = (e: any) => {
 export const Login = () => {
   const language = useLanguagePacks();
   const langCode = useLanguageSettings();
-  const loader = useLoader(20);
 
   const [user, setUser] = useState({
     email: "",
@@ -40,8 +38,6 @@ export const Login = () => {
       .then((userCredential) => {
         resetFormOnSubmit(e);
         const user = userCredential.user;
-
-        console.log(user);
       })
       .catch((error) => {
         setUser({

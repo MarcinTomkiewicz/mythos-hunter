@@ -12,6 +12,7 @@ import { useLanguageSettings } from "./hooks/useLanguageSettings";
 import { useLoader } from "./hooks/useLoader";
 import { useUser } from "./hooks/useUser";
 import { useRouter } from "./hooks/useRouter";
+import { AddItem } from "./components/admin/AddItem";
 
 export const App = () => {
   const user = useUser();
@@ -64,17 +65,10 @@ export const App = () => {
         </header>
         <section className="content">
           <Router>
+          {user?.role === "admin" ? <AddItem /> : ""}
             {currentRouter.map((router, i) => {
               return <span key={i}>{router}</span>;
             })}
-            {/* {user === null ? (
-              <>
-                <Registration />
-                <Login />
-              </>
-            ) : (
-              ""
-            )} */}
           </Router>
         </section>
       </main>
