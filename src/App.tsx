@@ -17,8 +17,8 @@ export const App = () => {
   const user = useUser();
   const language = useLanguagePacks();
   const langCode = useLanguageSettings();
-  
-  const loader = useLoader();
+  const loader = useLoader(40);
+
   const currentRouter = useRouter();
 
   const [isFullSizeMenu, setIsFullSizeMenu] = useState(true);
@@ -28,9 +28,9 @@ export const App = () => {
     if (language.headers === undefined) {
       setHeading(loader);
     } else {
-      return setHeading(language.headers?.character_view[0]);
+      return setHeading(language.headers?.character_view[langCode]);
     }
-  }, [language, loader]);
+  }, [language, loader, langCode]);
 
   const toggleFullSizeMenu = () => {
     setIsFullSizeMenu((prev) => !prev);

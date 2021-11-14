@@ -2,6 +2,7 @@ import { BsChatFill, BsPersonFill, BsBarChartFill } from "react-icons/bs";
 import { GiAxeSword } from "react-icons/gi";
 import { useLanguagePacks } from "../hooks/useLanguagePacks";
 import { useLanguageSettings } from "../hooks/useLanguageSettings";
+import { useLoader } from "../hooks/useLoader";
 import logo from "../img/Logo.png";
 
 type FullSizeMenuProps = {
@@ -11,6 +12,7 @@ type FullSizeMenuProps = {
 export const FullSizeMenu = ({ setHeading }: FullSizeMenuProps) => {
   const language = useLanguagePacks();
   const langCode = useLanguageSettings();
+  const loader = useLoader(20);
 
   return (
     <div className="fullsize-menu">
@@ -22,7 +24,7 @@ export const FullSizeMenu = ({ setHeading }: FullSizeMenuProps) => {
         >
           <BsPersonFill size="1.8rem" className="menu-icon menu-icon--big" />{" "}
           {language.headers === undefined
-            ? "🤣🤣🤣"
+            ? loader
             : language.headers?.character_view[langCode]}
         </li>
         <li
@@ -31,7 +33,7 @@ export const FullSizeMenu = ({ setHeading }: FullSizeMenuProps) => {
         >
           <BsBarChartFill size="1.8rem" className="menu-icon menu-icon--big" />{" "}
           {language.headers === undefined
-            ? "🤣🤣🤣"
+            ? loader
             : language.headers?.statistics[langCode]}
         </li>
         <li
@@ -40,7 +42,7 @@ export const FullSizeMenu = ({ setHeading }: FullSizeMenuProps) => {
         >
           <GiAxeSword size="1.8rem" className="menu-icon menu-icon--big" />{" "}
           {language.headers === undefined
-            ? "🤣🤣🤣"
+            ? loader
             : language.headers?.challenges[langCode]}
         </li>
         <li
@@ -49,7 +51,7 @@ export const FullSizeMenu = ({ setHeading }: FullSizeMenuProps) => {
         >
           <BsChatFill size="1.8rem" className="menu-icon menu-icon--big" />{" "}
           {language.headers === undefined
-            ? "🤣🤣🤣"
+            ? loader
             : language.headers?.chat[langCode]}
         </li>
       </ul>

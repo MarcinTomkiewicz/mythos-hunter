@@ -11,6 +11,7 @@ import {
 } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword } from "@firebase/auth";
 import { useLanguagePacks } from "../../hooks/useLanguagePacks";
+import { useLanguageSettings } from "../../hooks/useLanguageSettings";
 
 const createCharacter = async (uid: string, nickname: string) => {
   await setDoc(doc(db, "users", uid), {
@@ -66,6 +67,7 @@ const createPlayerArmory = async (uid: string) => {
 
 export const Registration = () => {
   const language = useLanguagePacks();
+  const langCode = useLanguageSettings();
   const [user, setUser] = useState({
     nickname: "",
     email: "",
@@ -120,7 +122,6 @@ export const Registration = () => {
 
   const handleOnSubmit = async (e: any) => {
     e.preventDefault();
-    console.log(124, usernameExists);
     checkUserNameInDb(user.nickname);
     if (usernameExists === true) {
       alert(
@@ -135,10 +136,10 @@ export const Registration = () => {
   return (
     <>
       <div className="">
-        <h2>{language.headers?.registration[0]}</h2>
+        <h2>{language.headers?.registration[langCode]}</h2>
         <form className="" id="signUp-form" onSubmit={handleOnSubmit}>
           <label htmlFor="">
-            {language.labels?.char_name[0]}:
+            {language.labels?.char_name[langCode]}:
             <input
               value={nickname}
               type="text"
@@ -150,7 +151,7 @@ export const Registration = () => {
             />
           </label>
           <label htmlFor="">
-            {language.labels?.email[0]}:
+            {language.labels?.email[langCode]}:
             <input
               value={email}
               type="email"
@@ -163,7 +164,7 @@ export const Registration = () => {
             />
           </label>
           <label htmlFor="">
-            {language.labels?.password[0]}:
+            {language.labels?.password[langCode]}:
             <input
               value={password}
               type="password"
@@ -176,11 +177,11 @@ export const Registration = () => {
             />
           </label>
           <button type="submit" className="">
-            {language.buttons?.create_char[0]}!
+            {language.buttons?.create_char[langCode]}!
           </button>
         </form>
         <div className="user-action">
-          Masz konto? <Link to="/login">{language.labels?.log_in[0]}</Link>
+        {language.labels?.has_account[langCode]} <Link to="/login">{language.labels?.log_in[langCode]}</Link>
         </div>
       </div>
     </>
