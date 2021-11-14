@@ -1,4 +1,5 @@
 import "./scss/main.scss";
+import { FunctionComponent } from "react";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import Character from "./components/Character/Character";
@@ -8,7 +9,7 @@ import NotFound from "./components/NotFound/NotFound";
 import Chat from "./components/Chat/Chat";
 import ChallengesOfGods from "./components/ChallengesOfGods/ChallengesOfGods";
 
-const App = () => {
+const App: FunctionComponent = () => {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
