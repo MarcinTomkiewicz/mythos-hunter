@@ -39,14 +39,14 @@ button {
   position: relative;
   &::before {
     position: absolute;
-    left: 25px;
+    left: 20px;
     top: 50%;
     transform: translate(-50%, -50%);
     content: "";
     background-image: url("../img/flag.png");
     background-size: 100%;
     background-repeat: no-repeat;
-    width: 3rem;
-    height: 2rem;
+    width: 2.8rem;
+    height: 1.9rem;
   }
 }
