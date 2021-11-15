@@ -34,6 +34,7 @@
   margin-right: 2rem;
   &__box {
     background-color: $color-white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     padding: 1rem;
     &:not(:last-child) {
       margin-bottom: 2rem;
@@ -44,6 +45,7 @@
 .content {
   width: 80%;
   background-color: $color-white;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   &__wrapper {
     padding: 1rem;
   }
