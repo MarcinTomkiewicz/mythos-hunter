@@ -3,12 +3,12 @@ import TopBar from "../atoms/TopBar/TopBar";
 import { useLanguagePacks } from "../../hooks/useLanguagePacks";
 import { useLanguageSettings } from "../../hooks/useLanguageSettings";
 
-const ChallengesOfGods: FunctionComponent = () => {
+const Armoury: FunctionComponent = () => {
   const languagePacks = useLanguagePacks();
   const langCode = useLanguageSettings();
   return (
     <>
-      <TopBar title={languagePacks.headers?.challenges[langCode]} />
+      <TopBar title={languagePacks.headers?.armoury[langCode]} />
       <div className="content__wrapper">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore modi
         fuga tenetur quidem voluptatem distinctio voluptas a libero eveniet enim
@@ -19,4 +19,4 @@ const ChallengesOfGods: FunctionComponent = () => {
   );
 };
 
-export default ChallengesOfGods;
+export default Armoury;
