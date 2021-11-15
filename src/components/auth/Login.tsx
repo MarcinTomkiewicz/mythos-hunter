@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useLanguagePacks } from "../../hooks/useLanguagePacks";
+import { useLanguageSettings } from "../../hooks/useLanguageSettings";
+import { useLoader } from "../../hooks/useLoader";
 
 const resetFormOnSubmit = (e: any) => {
   e.target.reset();
@@ -9,6 +11,9 @@ const resetFormOnSubmit = (e: any) => {
 
 export const Login = () => {
   const language = useLanguagePacks();
+  const langCode = useLanguageSettings();
+  const loader = useLoader(20);
+
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -49,14 +54,14 @@ export const Login = () => {
   return (
     <>
       <div className="modal active">
-        <h2>{language.headers?.login[0]}</h2>
+        <h2>{language.headers?.login[langCode]}</h2>
         <form
           className="registration__form login__form"
           id="logIn-form"
           onSubmit={handleOnSubmit}
         >
           <label htmlFor="logIn-email">
-            {language.labels?.email[0]}:
+            {language.labels?.email[langCode]}:
             <input
               type="email"
               className="form__input"
@@ -68,7 +73,7 @@ export const Login = () => {
             />
           </label>
           <label htmlFor="logIn-password">
-            {language.labels?.password[0]}:
+            {language.labels?.passwordlangCode}:
             <input
               type="password"
               className="form__input"
@@ -80,13 +85,13 @@ export const Login = () => {
             />
           </label>
           <button type="submit" className="btn btn-green">
-            {language.buttons?.log_in[0]}!
+            {language.buttons?.log_in[langCode]}!
           </button>
         </form>
 
         <div className="user-action">
-          Nie masz konta?{" "}
-          <Link to="/register">{language.buttons?.create_char[0]}</Link>
+        {language.labels?.no_account[langCode]}{" "}
+          <Link to="/register">{language.buttons?.create_char[langCode]}</Link>
         </div>
       </div>
     </>

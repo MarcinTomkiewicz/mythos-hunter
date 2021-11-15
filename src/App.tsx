@@ -7,7 +7,8 @@ import { FullSizeMenu } from "./components/FullSizeMenu";
 import { UserLogged } from "./components/UserLogged";
 import { UserNotLogged } from "./components/UserNotLogged";
 import { BsCaretLeftSquareFill } from "react-icons/bs";
-import { useLanguagePacks } from "./hooks/useLanguagePacks";
+import { useLanguagePacks } from "./hooks/useLanguagePacks"
+import { useLanguageSettings } from "./hooks/useLanguageSettings";
 import { useLoader } from "./hooks/useLoader";
 import { useUser } from "./hooks/useUser";
 import { useRouter } from "./hooks/useRouter";
@@ -15,7 +16,9 @@ import { useRouter } from "./hooks/useRouter";
 export const App = () => {
   const user = useUser();
   const language = useLanguagePacks();
-  const loader = useLoader();
+  const langCode = useLanguageSettings();
+  const loader = useLoader(40);
+
   const currentRouter = useRouter();
 
   const [isFullSizeMenu, setIsFullSizeMenu] = useState(true);
@@ -25,9 +28,9 @@ export const App = () => {
     if (language.headers === undefined) {
       setHeading(loader);
     } else {
-      return setHeading(language.headers?.character_view[0]);
+      return setHeading(language.headers?.character_view[langCode]);
     }
-  }, [language, loader]);
+  }, [language, loader, langCode]);
 
   const toggleFullSizeMenu = () => {
     setIsFullSizeMenu((prev) => !prev);
