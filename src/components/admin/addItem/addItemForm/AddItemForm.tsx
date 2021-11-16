@@ -1,29 +1,44 @@
-import { useState } from "react";
-import { GiChoice } from "react-icons/gi";
+import React, { useState } from "react";
+import { AddItemName } from "./addItemInputs/AddItemName";
+import { AddItemValue } from "./addItemInputs/AddItemValue";
 
-export const AddItemForm = ({ itemType }: any) => {
-  const [item, setItem] = useState<any>({
+interface AddItemFormProps {
+  itemType: string
+}
+
+interface itemTypes {
+  itemName: string,
+  itemValue: string,
+  itemLowDmg: number,
+  itemUppDmg: number,
+  itemDmg: number,
+  gender: string,
+  error: string,  
+}
+
+export const AddItemForm = ({ itemType }: AddItemFormProps) => {
+  const [item, setItem] = useState<itemTypes>({
     itemName: "",
-    itemValue: 0,
+    itemValue: "0",
     itemLowDmg: 0,
     itemUppDmg: 0,
     itemDmg: 0,
     gender: "",
+    error: ""
   });
 
   let { itemName, itemValue, itemLowDmg, itemUppDmg, itemDmg } = item;
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
     setItem({
       ...item,
       [e.target.name]: e.target.value,
       error: "",
     });
-    return item;
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(item);
   };
@@ -31,7 +46,9 @@ export const AddItemForm = ({ itemType }: any) => {
   if (itemType.includes("hand")) {
     return (
       <form name="handWeapon" onSubmit={handleSubmit}>
-        <div>
+        <AddItemName itemName={itemName} handleChange={handleChange} />
+        <AddItemValue itemValue={itemValue} handleChange={handleChange} />
+        {/* <div>
           Nazwa:{" "}
           <input
             type="text"
@@ -39,8 +56,8 @@ export const AddItemForm = ({ itemType }: any) => {
             value={itemName}
             onChange={handleChange}
           />
-        </div>
-        <div>
+        </div> */}
+        {/* <div>
           Wartość:{" "}
           <input
             type="number"
@@ -48,7 +65,7 @@ export const AddItemForm = ({ itemType }: any) => {
             value={itemValue}
             onChange={handleChange}
           />
-        </div>
+        </div> */}
         <div>
           Rodzaj: <input type="radio" id="male" name="gender" value="male" onChange={handleChange} />
           męski
