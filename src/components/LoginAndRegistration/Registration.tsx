@@ -1,6 +1,7 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { db } from "../../config/firebaseConfig";
+import TopBar from "../atoms/TopBar/TopBar";
 import {
   doc,
   setDoc,
@@ -12,6 +13,13 @@ import {
 import { getAuth, createUserWithEmailAndPassword } from "@firebase/auth";
 import { useLanguagePacks } from "../../hooks/useLanguagePacks";
 import { useLanguageSettings } from "../../hooks/useLanguageSettings";
+
+const initialValues = {
+  nickname: "",
+  email: "",
+  password: "",
+  error: "",
+};
 
 const createCharacter = async (uid: string, nickname: string) => {
   await setDoc(doc(db, "users", uid), {
@@ -65,29 +73,19 @@ const createPlayerArmory = async (uid: string) => {
   await addDoc(collection(testUser, "armory"), {});
 };
 
-export const Registration = () => {
+const Registration = () => {
   const language = useLanguagePacks();
   const langCode = useLanguageSettings();
-  const [user, setUser] = useState({
-    nickname: "",
-    email: "",
-    password: "",
-    error: "",
-  });
+  const [user, setUser] = useState(initialValues);
 
   const { nickname, email, password } = user;
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser({
       ...user,
       [e.target.name]: e.target.value,
       error: "",
     });
-    return user;
-  };
-
-  const resetFormOnSubmit = (e: any) => {
-    e.target.reset();
   };
 
   const [usernameExists, setUsernameExists] = useState<Boolean>(false);
@@ -103,14 +101,14 @@ export const Registration = () => {
     });
   };
 
-  const createUser = (e: any) => {
+  const createUser = (e: React.FormEvent<HTMLFormElement>) => {
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
         createCharacter(user.uid, nickname);
         createPlayerArmory(user.uid);
-        resetFormOnSubmit(e);
+        setUser(initialValues);
       })
       .catch((error) => {
         setUser({
@@ -120,7 +118,7 @@ export const Registration = () => {
       });
   };
 
-  const handleOnSubmit = async (e: any) => {
+  const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     checkUserNameInDb(user.nickname);
     if (usernameExists === true) {
@@ -135,8 +133,8 @@ export const Registration = () => {
 
   return (
     <>
-      <div className="">
-        <h2>{language.headers?.registration[langCode]}</h2>
+      <TopBar title={language.headers?.registration[langCode]} />
+      <div className="content__wrapper">
         <form className="" id="signUp-form" onSubmit={handleOnSubmit}>
           <label htmlFor="">
             {language.labels?.char_name[langCode]}:
@@ -181,9 +179,12 @@ export const Registration = () => {
           </button>
         </form>
         <div className="user-action">
-        {language.labels?.has_account[langCode]} <Link to="/login">{language.labels?.log_in[langCode]}</Link>
+          {language.labels?.has_account[langCode]}{" "}
+          <Link to="/login">{language.labels?.log_in[langCode]}</Link>
         </div>
       </div>
     </>
   );
 };
+
+export default Registration;

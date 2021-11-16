@@ -23,6 +23,15 @@
   }
 }
 
+.user-profile {
+  & .btn {
+    & a {
+      all: unset;
+      cursor: pointer;
+    }
+  }
+}
+
 .wrapper {
   padding-top: 2rem;
   display: flex;

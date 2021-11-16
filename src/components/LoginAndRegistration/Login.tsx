@@ -1,24 +1,21 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import React, { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useLanguagePacks } from "../../hooks/useLanguagePacks";
 import { useLanguageSettings } from "../../hooks/useLanguageSettings";
-import { useLoader } from "../../hooks/useLoader";
+import TopBar from "../atoms/TopBar/TopBar";
 
-const resetFormOnSubmit = (e: any) => {
-  e.target.reset();
+const initialValues = {
+  email: "",
+  password: "",
+  error: "",
 };
 
-export const Login = () => {
+const Login = () => {
   const language = useLanguagePacks();
   const langCode = useLanguageSettings();
-  const loader = useLoader(20);
 
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-    error: "",
-  });
+  const [user, setUser] = useState(initialValues);
 
   const { email, password } = user;
 
@@ -31,17 +28,16 @@ export const Login = () => {
     return user;
   };
 
-  const handleOnSubmit = (e: React.SyntheticEvent) => {
+  const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const auth = getAuth();
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        resetFormOnSubmit(e);
         const user = userCredential.user;
-
         console.log(user);
+        setUser(initialValues);
       })
       .catch((error) => {
         setUser({
@@ -53,8 +49,8 @@ export const Login = () => {
 
   return (
     <>
-      <div className="modal active">
-        <h2>{language.headers?.login[langCode]}</h2>
+      <TopBar title={language.headers?.login[langCode]} />
+      <div className="content__wrapper">
         <form
           className="registration__form login__form"
           id="logIn-form"
@@ -90,10 +86,12 @@ export const Login = () => {
         </form>
 
         <div className="user-action">
-        {language.labels?.no_account[langCode]}{" "}
+          {language.labels?.no_account[langCode]}{" "}
           <Link to="/register">{language.buttons?.create_char[langCode]}</Link>
         </div>
       </div>
     </>
   );
 };
+
+export default Login;
