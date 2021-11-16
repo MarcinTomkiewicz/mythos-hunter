@@ -13,20 +13,20 @@ button {
   transition: all 0.2s;
   &--ghost {
     background-color: rgba($color-white, 0.1);
-    color: #f3ac00;
-    border: 1px solid #f3ac00;
+    color: $color-secondary;
+    border: 1px solid $color-secondary;
     &:hover {
-      background-color: #f3ac00;
+      background-color: $color-secondary;
       color: $color-white;
     }
   }
   &--full {
-    background-color: #f3ac00;
-    border: 1px solid #f3ac00;
+    background-color: $color-secondary;
+    border: 1px solid $color-secondary;
     color: $color-white;
     &:hover {
-      background-color: #e29e00;
-      border-color: #e29e00;
+      background-color: $color-secondary-dark;
+      border-color: $color-secondary-dark;
     }
   }
 }
