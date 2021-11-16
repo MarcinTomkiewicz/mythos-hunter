@@ -1,24 +1,26 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import React, { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useLanguagePacks } from "../../hooks/useLanguagePacks";
 import { useLanguageSettings } from "../../hooks/useLanguageSettings";
-import { useLoader } from "../../hooks/useLoader";
+import TopBar from "../atoms/TopBar/TopBar";
+import { useUser } from "../../hooks/useUser";
+import { useNavigate } from "react-router-dom";
 
-const resetFormOnSubmit = (e: any) => {
-  e.target.reset();
+const initialValues = {
+  email: "",
+  password: "",
+  error: "",
 };
 
-export const Login = () => {
+
+const Login = () => {
+  const navigate = useNavigate();
   const language = useLanguagePacks();
   const langCode = useLanguageSettings();
-  const loader = useLoader(20);
+  const isLogged = useUser();
 
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-    error: "",
-  });
+  const [user, setUser] = useState(initialValues);
 
   const { email, password } = user;
 
@@ -28,20 +30,19 @@ export const Login = () => {
       [e.target.name]: e.target.value,
       error: "",
     });
-    return user;
   };
 
-  const handleOnSubmit = (e: React.SyntheticEvent) => {
+  const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const auth = getAuth();
+    const auth = getAuth(); 
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        resetFormOnSubmit(e);
-        const user = userCredential.user;
-
-        console.log(user);
+        
+        console.log(userCredential);
+        navigate("/");
+        setUser(user);
       })
       .catch((error) => {
         setUser({
@@ -53,8 +54,9 @@ export const Login = () => {
 
   return (
     <>
-      <div className="modal active">
-        <h2>{language.headers?.login[langCode]}</h2>
+      <TopBar title={language.headers?.login[langCode]} />
+      {isLogged !== null ? `${language.labels?.already_logged[langCode]} ${isLogged?.name}` :
+      <div className="content__wrapper">
         <form
           className="registration__form login__form"
           id="logIn-form"
@@ -73,7 +75,7 @@ export const Login = () => {
             />
           </label>
           <label htmlFor="logIn-password">
-            {language.labels?.passwordlangCode}:
+            {language.labels?.password[langCode]}:
             <input
               type="password"
               className="form__input"
@@ -90,10 +92,13 @@ export const Login = () => {
         </form>
 
         <div className="user-action">
-        {language.labels?.no_account[langCode]}{" "}
+          {language.labels?.no_account[langCode]}{" "}
           <Link to="/register">{language.buttons?.create_char[langCode]}</Link>
         </div>
       </div>
+       }
     </>
   );
 };
+
+export default Login;
