@@ -4,6 +4,8 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useLanguagePacks } from "../../hooks/useLanguagePacks";
 import { useLanguageSettings } from "../../hooks/useLanguageSettings";
 import TopBar from "../atoms/TopBar/TopBar";
+import { useUser } from "../../hooks/useUser";
+import { useNavigate } from "react-router-dom";
 
 const initialValues = {
   email: "",
@@ -11,9 +13,12 @@ const initialValues = {
   error: "",
 };
 
+
 const Login = () => {
+  const navigate = useNavigate();
   const language = useLanguagePacks();
   const langCode = useLanguageSettings();
+  const isLogged = useUser();
 
   const [user, setUser] = useState(initialValues);
 
@@ -30,13 +35,14 @@ const Login = () => {
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const auth = getAuth();
+    const auth = getAuth(); 
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        const user = userCredential.user;
-        console.log(user);
-        setUser(initialValues);
+        
+        console.log(userCredential);
+        navigate("/");
+        setUser(user);
       })
       .catch((error) => {
         setUser({
@@ -49,6 +55,7 @@ const Login = () => {
   return (
     <>
       <TopBar title={language.headers?.login[langCode]} />
+      {isLogged !== null ? `${language.labels?.already_logged[langCode]} ${isLogged?.name}` :
       <div className="content__wrapper">
         <form
           className="registration__form login__form"
@@ -68,7 +75,7 @@ const Login = () => {
             />
           </label>
           <label htmlFor="logIn-password">
-            {language.labels?.passwordlangCode}:
+            {language.labels?.password[langCode]}:
             <input
               type="password"
               className="form__input"
@@ -89,6 +96,7 @@ const Login = () => {
           <Link to="/register">{language.buttons?.create_char[langCode]}</Link>
         </div>
       </div>
+       }
     </>
   );
 };

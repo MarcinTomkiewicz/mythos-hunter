@@ -13,6 +13,7 @@ import {
 import { getAuth, createUserWithEmailAndPassword } from "@firebase/auth";
 import { useLanguagePacks } from "../../hooks/useLanguagePacks";
 import { useLanguageSettings } from "../../hooks/useLanguageSettings";
+import { useUser } from "../../hooks/useUser";
 
 const initialValues = {
   nickname: "",
@@ -76,6 +77,7 @@ const createPlayerArmory = async (uid: string) => {
 const Registration = () => {
   const language = useLanguagePacks();
   const langCode = useLanguageSettings();
+  const isLogged = useUser();
   const [user, setUser] = useState(initialValues);
 
   const { nickname, email, password } = user;
@@ -134,6 +136,7 @@ const Registration = () => {
   return (
     <>
       <TopBar title={language.headers?.registration[langCode]} />
+      {isLogged !== null ? `${language.labels?.already_logged[langCode]} ${isLogged?.name}` :
       <div className="content__wrapper">
         <form className="" id="signUp-form" onSubmit={handleOnSubmit}>
           <label htmlFor="">
@@ -183,6 +186,7 @@ const Registration = () => {
           <Link to="/login">{language.labels?.log_in[langCode]}</Link>
         </div>
       </div>
+}
     </>
   );
 };
