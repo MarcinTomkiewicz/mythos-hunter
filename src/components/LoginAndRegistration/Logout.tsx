@@ -1,22 +1,22 @@
 import { getAuth, signOut } from "firebase/auth";
 import { useLanguagePacks } from "../../hooks/useLanguagePacks";
 import { useLanguageSettings } from "../../hooks/useLanguageSettings";
-import { useUser } from "../../hooks/useUser";
 
-export const Logout = () => {
-  const user = useUser();
+const Logout = () => {
   const language = useLanguagePacks();
   const langCode = useLanguageSettings();
 
-  const logoutClick = () => {
+  const handleLogout = () => {
     const auth = getAuth();
     signOut(auth)
-      .then(() => {
-        console.log(user.name + " wylogowany poprawnie");
-      })
+      .then(() => {})
       .catch((error) => {
-        console.log("error");
+        console.log(error);
       });
   };
-  return <button onClick={logoutClick}>{language.buttons?.logout[langCode]}</button>;
+  return (
+    <button onClick={handleLogout}>{language.buttons?.logout[langCode]}</button>
+  );
 };
+
+export default Logout;

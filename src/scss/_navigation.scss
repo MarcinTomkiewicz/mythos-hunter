@@ -1,0 +1,25 @@
+.navigation {
+  padding: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  background-color: $color-primary;
+  @include flex-center;
+  &__list {
+    display: flex;
+  }
+  &__item {
+    &:not(:last-child) {
+      margin-right: 2rem;
+    }
+    & a {
+      color: $color-white;
+      text-decoration: none;
+      transition: background-color 0.2s;
+      &:hover {
+        border-bottom: 1px solid $color-white;
+      }
+      &.active {
+        border-bottom: 1px solid $color-white;
+      }
+    }
+  }
+}

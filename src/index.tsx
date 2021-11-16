@@ -1,10 +1,16 @@
-import React from "react";
+import { StrictMode } from "react";
 import ReactDOM from "react-dom";
-import { App } from "./App";
+import { BrowserRouter } from "react-router-dom";
+import { StyledEngineProvider } from "@mui/material/styles";
+import App from "./App";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <StyledEngineProvider injectFirst>
+    <StrictMode>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </StrictMode>
+  </StyledEngineProvider>,
   document.getElementById("root")
 );
