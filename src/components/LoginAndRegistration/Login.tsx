@@ -25,7 +25,6 @@ const Login = () => {
       [e.target.name]: e.target.value,
       error: "",
     });
-    return user;
   };
 
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
