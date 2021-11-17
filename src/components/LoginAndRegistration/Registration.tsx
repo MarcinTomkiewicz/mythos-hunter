@@ -181,10 +181,7 @@ const Registration = () => {
             {language.buttons?.create_char[langCode]}!
           </button>
         </form>
-        <div className="user-action">
-          {language.labels?.has_account[langCode]}{" "}
-          <Link to="/login">{language.labels?.log_in[langCode]}</Link>
-        </div>
+
       </div>
 }
     </>

@@ -39,8 +39,6 @@ const Login = () => {
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        
-        console.log(userCredential);
         navigate("/");
         setUser(user);
       })
@@ -91,10 +89,7 @@ const Login = () => {
           </button>
         </form>
 
-        <div className="user-action">
-          {language.labels?.no_account[langCode]}{" "}
-          <Link to="/register">{language.buttons?.create_char[langCode]}</Link>
-        </div>
+
       </div>
        }
     </>
