@@ -67,6 +67,9 @@ const LeftPanel: FunctionComponent = () => {
     ) {
       setPanelChanger("statistics");
     }
+    if (user === null && panelChanger === "statistics") {
+      setPanelChanger("login");
+    }
   };
 
   return (

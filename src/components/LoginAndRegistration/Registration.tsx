@@ -12,6 +12,8 @@ import { getAuth, createUserWithEmailAndPassword } from "@firebase/auth";
 import { useLanguagePacks } from "../../hooks/useLanguagePacks";
 import { useLanguageSettings } from "../../hooks/useLanguageSettings";
 import { useUser } from "../../hooks/useUser";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
 
 const initialValues = {
   nickname: "",
@@ -137,10 +139,22 @@ const Registration = () => {
         `${language.labels?.already_logged[langCode]} ${isLogged?.name}`
       ) : (
         <div className="content__wrapper">
-          <form className="" id="signUp-form" onSubmit={handleOnSubmit}>
+          <Box
+            component="form"
+            sx={{
+              "& > :not(style)": { m: 1, width: "25ch" },
+            }}
+            noValidate
+            autoComplete="off"
+            className=""
+            id="signUp-form"
+            onSubmit={handleOnSubmit}
+          >
             <label htmlFor="">
-              {language.labels?.char_name[langCode]}:
-              <input
+              <TextField
+                label={language.labels?.char_name[langCode]}
+                variant="outlined"
+                size="small"
                 value={nickname}
                 type="text"
                 className="f"
@@ -151,8 +165,10 @@ const Registration = () => {
               />
             </label>
             <label htmlFor="">
-              {language.labels?.email[langCode]}:
-              <input
+              <TextField
+                label={language.labels?.email[langCode]}
+                variant="outlined"
+                size="small"
                 value={email}
                 type="email"
                 className=""
@@ -164,8 +180,10 @@ const Registration = () => {
               />
             </label>
             <label htmlFor="">
-              {language.labels?.password[langCode]}:
-              <input
+              <TextField
+                label={language.labels?.password[langCode]}
+                variant="outlined"
+                size="small"
                 value={password}
                 type="password"
                 className=""
@@ -179,7 +197,7 @@ const Registration = () => {
             <button type="submit" className="">
               {language.buttons?.create_char[langCode]}!
             </button>
-          </form>
+          </Box>
         </div>
       )}
     </>
