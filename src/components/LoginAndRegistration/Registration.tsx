@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { db } from "../../config/firebaseConfig";
-import TopBar from "../atoms/TopBar/TopBar";
 import {
   doc,
   setDoc,
@@ -135,55 +133,55 @@ const Registration = () => {
 
   return (
     <>
-      <TopBar title={language.headers?.registration[langCode]} />
-      {isLogged !== null ? `${language.labels?.already_logged[langCode]} ${isLogged?.name}` :
-      <div className="content__wrapper">
-        <form className="" id="signUp-form" onSubmit={handleOnSubmit}>
-          <label htmlFor="">
-            {language.labels?.char_name[langCode]}:
-            <input
-              value={nickname}
-              type="text"
-              className="f"
-              name="nickname"
-              id="nickname"
-              required
-              onChange={handleChange}
-            />
-          </label>
-          <label htmlFor="">
-            {language.labels?.email[langCode]}:
-            <input
-              value={email}
-              type="email"
-              className=""
-              name="email"
-              autoComplete="username email"
-              id="signUp-email"
-              required
-              onChange={handleChange}
-            />
-          </label>
-          <label htmlFor="">
-            {language.labels?.password[langCode]}:
-            <input
-              value={password}
-              type="password"
-              className=""
-              autoComplete="new-password"
-              name="password"
-              id="signUp-password"
-              required
-              onChange={handleChange}
-            />
-          </label>
-          <button type="submit" className="">
-            {language.buttons?.create_char[langCode]}!
-          </button>
-        </form>
-
-      </div>
-}
+      {isLogged !== null ? (
+        `${language.labels?.already_logged[langCode]} ${isLogged?.name}`
+      ) : (
+        <div className="content__wrapper">
+          <form className="" id="signUp-form" onSubmit={handleOnSubmit}>
+            <label htmlFor="">
+              {language.labels?.char_name[langCode]}:
+              <input
+                value={nickname}
+                type="text"
+                className="f"
+                name="nickname"
+                id="nickname"
+                required
+                onChange={handleChange}
+              />
+            </label>
+            <label htmlFor="">
+              {language.labels?.email[langCode]}:
+              <input
+                value={email}
+                type="email"
+                className=""
+                name="email"
+                autoComplete="username email"
+                id="signUp-email"
+                required
+                onChange={handleChange}
+              />
+            </label>
+            <label htmlFor="">
+              {language.labels?.password[langCode]}:
+              <input
+                value={password}
+                type="password"
+                className=""
+                autoComplete="new-password"
+                name="password"
+                id="signUp-password"
+                required
+                onChange={handleChange}
+              />
+            </label>
+            <button type="submit" className="">
+              {language.buttons?.create_char[langCode]}!
+            </button>
+          </form>
+        </div>
+      )}
     </>
   );
 };
