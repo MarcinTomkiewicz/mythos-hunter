@@ -142,7 +142,7 @@ const Registration = () => {
           <Box
             component="form"
             sx={{
-              "& > :not(style)": { m: 1, width: "25ch" },
+              width: "100%",
             }}
             noValidate
             autoComplete="off"
@@ -161,6 +161,7 @@ const Registration = () => {
                 name="nickname"
                 id="nickname"
                 required
+                style={{ paddingBottom: "10px", fontSize: "12px" }}
                 onChange={handleChange}
               />
             </label>
@@ -176,6 +177,7 @@ const Registration = () => {
                 autoComplete="username email"
                 id="signUp-email"
                 required
+                style={{ paddingBottom: "10px" }}
                 onChange={handleChange}
               />
             </label>
@@ -191,6 +193,7 @@ const Registration = () => {
                 name="password"
                 id="signUp-password"
                 required
+                style={{ paddingBottom: "10px" }}
                 onChange={handleChange}
               />
             </label>

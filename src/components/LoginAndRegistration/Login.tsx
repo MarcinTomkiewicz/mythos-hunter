@@ -58,7 +58,7 @@ const Login = () => {
           <Box
             component="form"
             sx={{
-              "& > :not(style)": { m: 1, width: "25ch" },
+              width: "100%",
             }}
             noValidate
             autoComplete="off"
@@ -77,6 +77,7 @@ const Login = () => {
                 autoComplete="username email"
                 id="logIn-email"
                 required
+                style={{ paddingBottom: "10px" }}
                 onChange={handleChange}
               />
             </label>
