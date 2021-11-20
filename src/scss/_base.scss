@@ -16,5 +16,14 @@ body {
   font-size: 1.6rem;
   line-height: 1.6;
   font-weight: 300;
-  color: $color-grey-dark-1;
+  color: $color-black;
+  background-image: url("../img/background.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding-top: 2rem;
 }
