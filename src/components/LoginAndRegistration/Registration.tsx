@@ -35,18 +35,18 @@ const createCharacter = async (uid: string, nickname: string) => {
     role: "player",
     uid,
     nationality: "none",
-    stats: {
-      agi: 1,
-      def: 1,
-      dmg: 1,
-      int: 1,
-      luck: 1,
-      perc: 1,
-      speed: 1,
-      str: 1,
-      tough: 1,
-      vit: 1,
-    },
+    stats: [
+      { abbr: "agi", points: 1 },
+      { abbr: "def", points: 1 },
+      { abbr: "dmg", points: 1 },
+      { abbr: "int", points: 1 },
+      { abbr: "luck", points: 1 },
+      { abbr: "perc", points: 1 },
+      { abbr: "speed", points: 1 },
+      { abbr: "str", points: 1 },
+      { abbr: "tough", points: 1 },
+      { abbr: "vit", points: 1 },
+    ],
     resources: {
       gold: 100,
       marble: 50,
@@ -135,58 +135,60 @@ const Registration = () => {
 
   return (
     <>
-      <TopBar title={language.headers?.registration[langCode]} />
-      {isLogged !== null ? `${language.labels?.already_logged[langCode]} ${isLogged?.name}` :
-      <div className="content__wrapper">
-        <form className="" id="signUp-form" onSubmit={handleOnSubmit}>
-          <label htmlFor="">
-            {language.labels?.char_name[langCode]}:
-            <input
-              value={nickname}
-              type="text"
-              className="f"
-              name="nickname"
-              id="nickname"
-              required
-              onChange={handleChange}
-            />
-          </label>
-          <label htmlFor="">
-            {language.labels?.email[langCode]}:
-            <input
-              value={email}
-              type="email"
-              className=""
-              name="email"
-              autoComplete="username email"
-              id="signUp-email"
-              required
-              onChange={handleChange}
-            />
-          </label>
-          <label htmlFor="">
-            {language.labels?.password[langCode]}:
-            <input
-              value={password}
-              type="password"
-              className=""
-              autoComplete="new-password"
-              name="password"
-              id="signUp-password"
-              required
-              onChange={handleChange}
-            />
-          </label>
-          <button type="submit" className="">
-            {language.buttons?.create_char[langCode]}!
-          </button>
-        </form>
-        <div className="user-action">
-          {language.labels?.has_account[langCode]}{" "}
-          <Link to="/login">{language.labels?.log_in[langCode]}</Link>
+      <TopBar title={language.headers?.register[langCode]} />
+      {isLogged !== null ? (
+        `${language.labels?.already_logged[langCode]} ${isLogged?.name}`
+      ) : (
+        <div className="content__wrapper">
+          <form className="" id="signUp-form" onSubmit={handleOnSubmit}>
+            <label htmlFor="">
+              {language.labels?.char_name[langCode]}:
+              <input
+                value={nickname}
+                type="text"
+                className="f"
+                name="nickname"
+                id="nickname"
+                required
+                onChange={handleChange}
+              />
+            </label>
+            <label htmlFor="">
+              {language.labels?.email[langCode]}:
+              <input
+                value={email}
+                type="email"
+                className=""
+                name="email"
+                autoComplete="username email"
+                id="signUp-email"
+                required
+                onChange={handleChange}
+              />
+            </label>
+            <label htmlFor="">
+              {language.labels?.password[langCode]}:
+              <input
+                value={password}
+                type="password"
+                className=""
+                autoComplete="new-password"
+                name="password"
+                id="signUp-password"
+                required
+                onChange={handleChange}
+              />
+            </label>
+            <button type="submit" className="">
+              {language.buttons?.create_char[langCode]}!
+            </button>
+          </form>
+          <div className="user-action">
+            {language.labels?.has_account[langCode]}{" "}
+            <Link to="/login">{language.labels?.log_in[langCode]}</Link>
+          </div>
         </div>
-      </div>
-}
+      )}
     </>
   );
 };
