@@ -1,20 +1,30 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../config/firebaseConfig";
-import TopBar from "../atoms/TopBar/TopBar";
 import { useLanguagePacks } from "../../hooks/useLanguagePacks";
 import { useLanguageSettings } from "../../hooks/useLanguageSettings";
 import { useUser } from "../../hooks/useUser";
-import { StatisticsInterface } from "../../types/interfaces";
+import {
+  StatisticsInterface,
+  NotificationInterface,
+} from "../../types/interfaces";
 import StatisticsItem from "./StatisticsItem";
+import TopBar from "../atoms/TopBar/TopBar";
 import ButtonBlue from "../atoms/Buttons/BlueButton";
+import Notification from "../atoms/Notification/Notification";
+import useNotification from "../../hooks/useNotification";
 
 const Statistics: FunctionComponent = () => {
   const languagePacks = useLanguagePacks();
   const langCode = useLanguageSettings();
   const [stats, setStats] = useState<StatisticsInterface[]>([]);
+  const [notification, setNotification] = useState<NotificationInterface>({
+    message: "",
+    type: "warning",
+  });
   const [pointsLeft, setPointsLeft] = useState(10);
   const user = useUser();
+  const [isNotificationOpen, toggleIsNotificationOpen] = useNotification();
   useEffect(() => {
     const getStatistics = async () => {
       try {
@@ -35,9 +45,23 @@ const Statistics: FunctionComponent = () => {
   }, [user]);
   const updateDataInDb = async () => {
     const docRef = doc(db, "users", user?.uid);
-    await updateDoc(docRef, {
-      stats,
-    });
+    try {
+      await updateDoc(docRef, {
+        stats,
+      });
+      setNotification({
+        message: "Punkty statystyk zostały zaktualizowane.",
+        type: "success",
+      });
+      toggleIsNotificationOpen();
+    } catch (error) {
+      console.log(error);
+      setNotification({
+        message: "Wystąpił błąd. Spróboj ponownie",
+        type: "error",
+      });
+      toggleIsNotificationOpen();
+    }
   };
   return (
     <>
@@ -59,6 +83,12 @@ const Statistics: FunctionComponent = () => {
           onClick={updateDataInDb}
         />
       </div>
+      <Notification
+        message={notification.message}
+        type={notification.type}
+        isNotificationOpen={isNotificationOpen}
+        toggleIsNotificationOpen={toggleIsNotificationOpen}
+      />
     </>
   );
 };
