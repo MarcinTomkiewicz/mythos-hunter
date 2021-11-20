@@ -61,7 +61,7 @@ const StatisticsItem: FunctionComponent<StatisticsItemProps> = ({
       <div className="stat-item__wrapper">
         <div className="stat-item__points">{points}</div>
         <button className="btn-round" onClick={handleIncreasePoints}>
-          <Icon color="primary" style={{ fontSize: "22px" }}>
+          <Icon color="success" style={{ fontSize: "22px" }}>
             add_circle
           </Icon>
         </button>
