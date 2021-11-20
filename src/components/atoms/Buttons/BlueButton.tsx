@@ -4,7 +4,7 @@ import { FunctionComponent } from "react";
 interface ButtonBlueProps {
   text: string;
   onClick: () => void;
-  isDisabled: boolean;
+  isDisabled?: boolean;
 }
 
 const ButtonBlue: FunctionComponent<ButtonBlueProps> = ({
