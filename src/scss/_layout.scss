@@ -4,7 +4,7 @@
 
 .header {
   @include flex-center;
-  padding: 2rem;
+  margin-bottom: 2rem;
 }
 
 .logo-container {
@@ -57,5 +57,9 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   &__wrapper {
     padding: 1rem;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: flex-start;
   }
 }

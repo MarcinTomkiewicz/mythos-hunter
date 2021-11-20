@@ -55,3 +55,10 @@ button {
   font-size: 1.2rem;
   font-family: inherit;
 }
+
+.btn-round {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
