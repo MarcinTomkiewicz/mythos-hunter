@@ -22,9 +22,25 @@ const Statistics: FunctionComponent = () => {
     message: "",
     type: "warning",
   });
-  const [pointsLeft, setPointsLeft] = useState(10);
+  const [pointsLeft, setPointsLeft] = useState(0);
   const user = useUser();
   const [isNotificationOpen, toggleIsNotificationOpen] = useNotification();
+
+  useEffect(() => {
+    if (stats.length === 0) {
+      return;
+    }
+    const totalAssignedPoints = stats.reduce(
+      (sum, curr) => (sum += curr.points),
+      0
+    );
+    if (totalAssignedPoints === 30) {
+      setPointsLeft(0);
+    } else {
+      setPointsLeft(30 - totalAssignedPoints);
+    }
+  }, [stats]);
+
   useEffect(() => {
     const getStatistics = async () => {
       try {
@@ -57,7 +73,7 @@ const Statistics: FunctionComponent = () => {
     } catch (error) {
       console.log(error);
       setNotification({
-        message: "Wystąpił błąd. Spróboj ponownie",
+        message: "Wystąpił błąd. Spróbój ponownie",
         type: "error",
       });
       toggleIsNotificationOpen();
