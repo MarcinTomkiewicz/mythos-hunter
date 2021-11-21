@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import { useLanguageSettings } from "../../hooks/useLanguageSettings";
 import { useLanguagePacks } from "../../hooks/useLanguagePacks";
 import { StatisticsInterface } from "../../types/interfaces";
-import Icon from "@mui/material/Icon";
+import RoundButton from "../atoms/Buttons/RoundButton";
 
 interface StatisticsItemProps {
   abbr: string;
@@ -60,16 +60,16 @@ const StatisticsItem: FunctionComponent<StatisticsItemProps> = ({
       </span>
       <div className="stat-item__wrapper">
         <div className="stat-item__points">{points}</div>
-        <button className="btn-round" onClick={handleIncreasePoints}>
-          <Icon color="success" style={{ fontSize: "22px" }}>
-            add_circle
-          </Icon>
-        </button>
-        <button className="btn-round" onClick={handleDecreasePoints}>
-          <Icon color="error" style={{ fontSize: "22px" }}>
-            remove_circle
-          </Icon>
-        </button>
+        <RoundButton
+          iconName="add_circle"
+          onClick={handleIncreasePoints}
+          color="success"
+        />
+        <RoundButton
+          iconName="remove_circle"
+          onClick={handleDecreasePoints}
+          color="error"
+        />
       </div>
     </div>
   );
