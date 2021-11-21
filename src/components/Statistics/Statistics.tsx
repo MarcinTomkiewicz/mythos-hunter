@@ -83,7 +83,9 @@ const Statistics: FunctionComponent = () => {
     <>
       <TopBar title={languagePacks.headers?.statistics[langCode]} />
       <div className="content__wrapper">
-        <div className="points-left">Pozostało punktów: {pointsLeft}</div>
+        <div className="points-left">
+          {languagePacks.headers?.points_left[langCode]}: {pointsLeft}
+        </div>
         {stats.map(({ abbr, points }) => (
           <StatisticsItem
             key={abbr}
