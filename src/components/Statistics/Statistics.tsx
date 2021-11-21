@@ -66,14 +66,14 @@ const Statistics: FunctionComponent = () => {
         stats,
       });
       setNotification({
-        message: "Punkty statystyk zostały zaktualizowane.",
+        message: languagePacks.notifications?.stats_success[langCode],
         type: "success",
       });
       toggleIsNotificationOpen();
     } catch (error) {
       console.log(error);
       setNotification({
-        message: "Wystąpił błąd. Spróbój ponownie",
+        message: languagePacks.notifications?.error[langCode],
         type: "error",
       });
       toggleIsNotificationOpen();
