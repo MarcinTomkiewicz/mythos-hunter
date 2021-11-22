@@ -86,7 +86,6 @@ const Statistics: FunctionComponent = () => {
       {stats.length === 0 ? (
         <div className="loader-wrapper">
           <BallTriangleLoader size={60} />
-          <span>Ładowanie...</span>
         </div>
       ) : (
         <div className="content__wrapper">
