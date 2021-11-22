@@ -13,7 +13,6 @@ const initialValues = {
   error: "",
 };
 
-
 const Login = () => {
   const navigate = useNavigate();
   const language = useLanguagePacks();
@@ -35,12 +34,10 @@ const Login = () => {
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const auth = getAuth(); 
+    const auth = getAuth();
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        
-        console.log(userCredential);
         navigate("/");
         setUser(user);
       })
@@ -55,48 +52,52 @@ const Login = () => {
   return (
     <>
       <TopBar title={language.headers?.login[langCode]} />
-      {isLogged !== null ? `${language.labels?.already_logged[langCode]} ${isLogged?.name}` :
-      <div className="content__wrapper">
-        <form
-          className="registration__form login__form"
-          id="logIn-form"
-          onSubmit={handleOnSubmit}
-        >
-          <label htmlFor="logIn-email">
-            {language.labels?.email[langCode]}:
-            <input
-              type="email"
-              className="form__input"
-              name="email"
-              autoComplete="username email"
-              id="logIn-email"
-              required
-              onChange={handleChange}
-            />
-          </label>
-          <label htmlFor="logIn-password">
-            {language.labels?.password[langCode]}:
-            <input
-              type="password"
-              className="form__input"
-              autoComplete="current-password"
-              name="password"
-              id="logIn-password"
-              required
-              onChange={handleChange}
-            />
-          </label>
-          <button type="submit" className="btn btn-green">
-            {language.buttons?.log_in[langCode]}!
-          </button>
-        </form>
+      {isLogged !== null ? (
+        `${language.labels?.already_logged[langCode]} ${isLogged?.name}`
+      ) : (
+        <div className="content__wrapper">
+          <form
+            className="registration__form login__form"
+            id="logIn-form"
+            onSubmit={handleOnSubmit}
+          >
+            <label htmlFor="logIn-email">
+              {language.labels?.email[langCode]}:
+              <input
+                type="email"
+                className="form__input"
+                name="email"
+                autoComplete="username email"
+                id="logIn-email"
+                required
+                onChange={handleChange}
+              />
+            </label>
+            <label htmlFor="logIn-password">
+              {language.labels?.password[langCode]}:
+              <input
+                type="password"
+                className="form__input"
+                autoComplete="current-password"
+                name="password"
+                id="logIn-password"
+                required
+                onChange={handleChange}
+              />
+            </label>
+            <button type="submit" className="btn btn-green">
+              {language.buttons?.log_in[langCode]}!
+            </button>
+          </form>
 
-        <div className="user-action">
-          {language.labels?.no_account[langCode]}{" "}
-          <Link to="/register">{language.buttons?.create_char[langCode]}</Link>
+          <div className="user-action">
+            {language.labels?.no_account[langCode]}{" "}
+            <Link to="/register">
+              {language.buttons?.create_char[langCode]}
+            </Link>
+          </div>
         </div>
-      </div>
-       }
+      )}
     </>
   );
 };
