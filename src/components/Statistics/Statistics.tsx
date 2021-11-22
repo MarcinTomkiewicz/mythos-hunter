@@ -13,6 +13,7 @@ import TopBar from "../atoms/TopBar/TopBar";
 import ButtonBlue from "../atoms/Buttons/BlueButton";
 import Notification from "../atoms/Notification/Notification";
 import useNotification from "../../hooks/useNotification";
+import BallTriangleLoader from "../atoms/Loaders/BallTriangleLoader";
 
 const Statistics: FunctionComponent = () => {
   const languagePacks = useLanguagePacks();
@@ -82,25 +83,32 @@ const Statistics: FunctionComponent = () => {
   return (
     <>
       <TopBar title={languagePacks.headers?.statistics[langCode]} />
-      <div className="content__wrapper">
-        <div className="points-left">
-          {languagePacks.headers?.points_left[langCode]}: {pointsLeft}
+      {stats.length === 0 ? (
+        <div className="loader-wrapper">
+          <BallTriangleLoader size={60} />
+          <span>Ładowanie...</span>
         </div>
-        {stats.map(({ abbr, points }) => (
-          <StatisticsItem
-            key={abbr}
-            abbr={abbr}
-            points={points}
-            pointsLeft={pointsLeft}
-            setStatistics={setStats}
-            setPointsLeft={setPointsLeft}
+      ) : (
+        <div className="content__wrapper">
+          <div className="points-left">
+            {languagePacks.headers?.points_left[langCode]}: {pointsLeft}
+          </div>
+          {stats.map(({ abbr, points }) => (
+            <StatisticsItem
+              key={abbr}
+              abbr={abbr}
+              points={points}
+              pointsLeft={pointsLeft}
+              setStatistics={setStats}
+              setPointsLeft={setPointsLeft}
+            />
+          ))}
+          <ButtonBlue
+            text={languagePacks.labels?.apply[langCode]}
+            onClick={updateDataInDb}
           />
-        ))}
-        <ButtonBlue
-          text={languagePacks.labels?.apply[langCode]}
-          onClick={updateDataInDb}
-        />
-      </div>
+        </div>
+      )}
       <Notification
         message={notification.message}
         type={notification.type}
