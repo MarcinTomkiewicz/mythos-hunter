@@ -80,6 +80,8 @@ const Registration = () => {
   const isLogged = useUser();
   const [user, setUser] = useState(initialValues);
 
+  const usersFromDatabase: any[] = [];
+
   const { nickname, email, password } = user;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,17 +92,14 @@ const Registration = () => {
     });
   };
 
-  const [usernameExists, setUsernameExists] = useState<Boolean>(false);
-
   const checkUserNameInDb = async (username: string) => {
     const existingUser = query(collection(db, "users"));
     const allUsers = await getDocs(existingUser);
 
     allUsers.docs.forEach((user) => {
-      if (username === user.data().name) {
-        return setUsernameExists(true);
-      }
+      usersFromDatabase.push(user.data().name);
     });
+    return usersFromDatabase;
   };
 
   const createUser = (e: React.FormEvent<HTMLFormElement>) => {
@@ -122,16 +121,23 @@ const Registration = () => {
 
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(email.length);
-    checkUserNameInDb(user.nickname);
-    if (usernameExists === true) {
+    let isUserInDatabase: boolean = false;
+    const usersExistingInDatabase = await checkUserNameInDb(user.nickname);
+    usersExistingInDatabase.map((playerName) => {
+      if (playerName === user.nickname) {
+        return (isUserInDatabase = true);
+      }
+      return 0;
+    });
+    if (isUserInDatabase) {
       alert(
-        `Uzytkownik o nazwie ${nickname} juz istnieje! Wybierz inną nazwę!`
+        `Uzytkownik o nazwie ${nickname} juz istnieje! Wybierz inną nazwę! /n Czekamy na zmergowanie Przemka errorów, eby je wymienić na lepsze, bo ten się nie podoba Marcinowi :(`
       );
+      window.location.reload();
     } else {
       createUser(e);
     }
-    setUsernameExists(false);
+    isUserInDatabase = false;
   };
 
   return (
