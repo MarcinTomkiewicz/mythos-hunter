@@ -133,7 +133,7 @@ const Registration = () => {
       alert(
         `Uzytkownik o nazwie ${nickname} juz istnieje! Wybierz inną nazwę! /n Czekamy na zmergowanie Przemka errorów, eby je wymienić na lepsze, bo ten się nie podoba Marcinowi :(`
       );
-      window.location.reload();
+      setUser({ nickname: "", email: "", password: "", error: "" });
     } else {
       createUser(e);
     }
