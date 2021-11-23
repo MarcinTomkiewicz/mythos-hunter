@@ -122,6 +122,7 @@ const Registration = () => {
 
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(email.length);
     checkUserNameInDb(user.nickname);
     if (usernameExists === true) {
       alert(
@@ -197,9 +198,27 @@ const Registration = () => {
                 onChange={handleChange}
               />
             </label>
-            <button type="submit" className="">
-              {language.buttons?.create_char[langCode]}!
-            </button>
+            <br />
+            {nickname.length === 0 ||
+            password.length === 0 ||
+            email.length === 0 ? (
+              <button
+                type="submit"
+                className=""
+                style={{ padding: "5px 20px", border: "1px solid black" }}
+                disabled
+              >
+                {language.buttons?.create_char[langCode]}!
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className=""
+                style={{ padding: "5px 20px", border: "1px solid black" }}
+              >
+                {language.buttons?.create_char[langCode]}!
+              </button>
+            )}
           </Box>
         </div>
       )}

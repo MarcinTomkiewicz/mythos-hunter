@@ -91,11 +91,17 @@ const Login = () => {
                 autoComplete="current-password"
                 name="password"
                 id="logIn-password"
+                style={{ paddingBottom: "10px" }}
                 required
                 onChange={handleChange}
               />
             </label>
-            <button type="submit" className="btn btn-green">
+            <br />
+            <button
+              type="submit"
+              className=""
+              style={{ padding: "5px 20px", border: "1px solid black" }}
+            >
               {language.buttons?.log_in[langCode]}!
             </button>
           </Box>
