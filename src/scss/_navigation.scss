@@ -21,5 +21,21 @@
         border-bottom: 1px solid $color-white;
       }
     }
+    & button {
+      border: 0;
+      padding: 0;
+      box-shadow: none;
+      cursor: pointer;
+      height: 22px;
+      color: $color-white;
+      text-decoration: none;
+      transition: background-color 0.2s;
+      &:hover {
+        border-bottom: 1px solid $color-white;
+      }
+      &.active {
+        border-bottom: 1px solid $color-white;
+      }
+    }
   }
 }

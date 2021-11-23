@@ -11,7 +11,7 @@ export const useLanguageSettings = (): number => {
     useEffect(() => {
         if (user === null) {
             setLangCode((): number => {
-                if (detectedLanguage === "pl") {
+                if (detectedLanguage === "pl" || detectedLanguage === "pl-PL") {
                     return 0;
                 }
                 else {
