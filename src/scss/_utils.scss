@@ -62,3 +62,23 @@ button {
   display: flex;
   align-items: center;
 }
+
+.dropdown {
+  display: block;
+  top: 130%;
+  right: 0;
+  position: absolute;
+  min-width: 15rem;
+  background-color: #f5f5f5;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  &__list {
+    font-size: 1.4rem;
+  }
+  &__item {
+    padding: 1rem;
+    cursor: pointer;
+    &:hover {
+      background-color: #ebebeb;
+    }
+  }
+}
