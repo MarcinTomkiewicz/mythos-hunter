@@ -1,5 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { auth } from "../../config/firebaseConfig";
+import { useLanguageSettings } from "../../hooks/useLanguageSettings";
+import { useLanguagePacks } from "../../hooks/useLanguagePacks";
 
 interface DropdownProps {
   isDropdownOpen: boolean;
@@ -10,6 +12,8 @@ const Dropdown: FunctionComponent<DropdownProps> = ({
   isDropdownOpen,
   setIsDropdownOpen,
 }) => {
+  const languagePacks = useLanguagePacks();
+  const langCode = useLanguageSettings();
   if (!isDropdownOpen) {
     return null;
   }
@@ -20,9 +24,11 @@ const Dropdown: FunctionComponent<DropdownProps> = ({
   return (
     <div className="dropdown">
       <ul className="dropdown__list">
-        <li className="dropdown__item">Profil</li>
+        <li className="dropdown__item">
+          {languagePacks.labels?.profile[langCode]}
+        </li>
         <li onClick={handleLogout} className="dropdown__item">
-          Wyloguj
+          {languagePacks.labels?.log_out[langCode]}
         </li>
       </ul>
     </div>

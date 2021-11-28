@@ -3,16 +3,22 @@ import { useUser } from "../../hooks/useUser";
 import { BsChevronDown } from "react-icons/bs";
 import profilePic from "../../img/profile.png";
 import Dropdown from "./Dropdown";
+import { useLanguageSettings } from "../../hooks/useLanguageSettings";
+import { useLanguagePacks } from "../../hooks/useLanguagePacks";
 
 const UserLogged: FunctionComponent = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const languagePacks = useLanguagePacks();
+  const langCode = useLanguageSettings();
   const user = useUser();
   return (
     <div className="user-profile__logged">
       <img src={profilePic} alt="" />
       <div className="user-profile__details">
         <span className="user-profile__credentials">{user?.name}</span>
-        <span className="user-profile__credentials">Poziom: {user?.level}</span>
+        <span className="user-profile__credentials">
+          {languagePacks.labels?.level[langCode]}: {user?.level}
+        </span>
       </div>
       <BsChevronDown
         style={{
