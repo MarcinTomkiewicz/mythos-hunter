@@ -1,24 +1,28 @@
+import { AlertColor } from "@mui/material";
 import Button from "@mui/material/Button";
 import { FunctionComponent } from "react";
 
-interface ButtonBlueProps {
+interface ButtonMuiProps {
   text: string;
   onClick: () => void;
   isDisabled?: boolean;
+  color?: AlertColor;
 }
 
-const ButtonBlue: FunctionComponent<ButtonBlueProps> = ({
+const ButtonMui: FunctionComponent<ButtonMuiProps> = ({
   text,
   onClick,
   isDisabled = false,
+  color = "info",
 }) => {
   if (!isDisabled) {
     return (
       <Button
         variant="contained"
-        size="large"
-        style={{ fontSize: "12px", fontFamily: "inherit" }}
         onClick={onClick}
+        size="large"
+        color={color}
+        className="btn-mui"
       >
         {text}
       </Button>
@@ -28,8 +32,9 @@ const ButtonBlue: FunctionComponent<ButtonBlueProps> = ({
       <Button
         variant="contained"
         size="large"
-        className="btn-blue"
-        onClick={onClick}
+        color={color}
+        style={{ cursor: "not-allowed" }}
+        className="btn-mui"
         disabled
       >
         {text}
@@ -38,4 +43,4 @@ const ButtonBlue: FunctionComponent<ButtonBlueProps> = ({
   }
 };
 
-export default ButtonBlue;
+export default ButtonMui;

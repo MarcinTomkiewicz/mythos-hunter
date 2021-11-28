@@ -10,7 +10,7 @@ import {
 } from "../../types/interfaces";
 import StatisticsItem from "./StatisticsItem";
 import TopBar from "../atoms/TopBar/TopBar";
-import ButtonBlue from "../atoms/Buttons/BlueButton";
+import ButtonMui from "../atoms/Buttons/ButtonMui";
 import Notification from "../atoms/Notification/Notification";
 import useNotification from "../../hooks/useNotification";
 import BallTriangleLoader from "../atoms/Loaders/BallTriangleLoader";
@@ -102,7 +102,7 @@ const Statistics: FunctionComponent = () => {
               setPointsLeft={setPointsLeft}
             />
           ))}
-          <ButtonBlue
+          <ButtonMui
             text={languagePacks.labels?.apply[langCode]}
             onClick={updateDataInDb}
           />
