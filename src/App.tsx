@@ -9,9 +9,6 @@ import NotFound from "./components/NotFound/NotFound";
 import Chat from "./components/Chat/Chat";
 import ChallengesOfGods from "./components/ChallengesOfGods/ChallengesOfGods";
 import Armoury from "./components/Armoury/Armoury";
-import Registration from "./components/LoginAndRegistration/Registration";
-import Login from "./components/LoginAndRegistration/Login";
-import AdminPanel from "./components/AdminPanel/AdminPanel";
 
 const App: FunctionComponent = () => {
   return (
@@ -23,9 +20,6 @@ const App: FunctionComponent = () => {
         <Route path="statistics" element={<Statistics />} />
         <Route path="challenges-of-gods" element={<ChallengesOfGods />} />
         <Route path="chat" element={<Chat />} />
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Registration />} />
-        <Route path="admin" element={<AdminPanel />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

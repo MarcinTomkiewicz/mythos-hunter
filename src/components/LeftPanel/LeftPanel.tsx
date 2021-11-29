@@ -29,7 +29,7 @@ const LeftPanel: FunctionComponent = () => {
   }, [panelChanger, user]);
 
   const determinePanels = () => {
-    if (panelChanger === "register") {
+    if (user === null && panelChanger === "register") {
       return (
         <>
           <div className="user-action">
@@ -45,7 +45,7 @@ const LeftPanel: FunctionComponent = () => {
         </>
       );
     }
-    if (panelChanger === "login") {
+    if (user === null && panelChanger === "login") {
       return (
         <>
           <div className="user-action">
@@ -61,13 +61,28 @@ const LeftPanel: FunctionComponent = () => {
         </>
       );
     }
+    if (
+      user !== null &&
+      (panelChanger === "login" || panelChanger === "register")
+    ) {
+      setPanelChanger("statistics");
+    }
+    if (user === null && panelChanger === "statistics") {
+      setPanelChanger("login");
+    }
   };
 
   return (
     <div className="left-panel">
-      <LeftPanelBox title={languagePacks.headers?.user_statistics[langCode]}>
+      <LeftPanelBox
+        title={
+          languagePacks.headers !== undefined
+            ? languagePacks.headers[panelChanger][langCode]
+            : ""
+        }
+      >
         {leftPanel}
-        {user === null ? determinePanels() : ""}
+        {determinePanels()}
       </LeftPanelBox>
       <LeftPanelBox
         title={languagePacks.headers?.resources_and_others[langCode]}
