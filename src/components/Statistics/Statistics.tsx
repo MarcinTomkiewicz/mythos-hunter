@@ -79,7 +79,7 @@ const Statistics: FunctionComponent = () => {
     <>
       <TopBar title={languagePacks.headers?.statistics[langCode]} />
       {stats.length === 0 ? (
-        <div className="loader-wrapper">
+        <div className="center-wrapper">
           <BallTriangleLoader size={60} />
         </div>
       ) : (
