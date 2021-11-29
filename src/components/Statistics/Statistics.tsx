@@ -28,19 +28,8 @@ const Statistics: FunctionComponent = () => {
   const [isNotificationOpen, toggleIsNotificationOpen] = useNotification();
 
   useEffect(() => {
-    if (stats.length === 0) {
-      return;
-    }
-    const totalAssignedPoints = stats.reduce(
-      (sum, curr) => (sum += curr.points),
-      0
-    );
-    if (totalAssignedPoints === 30) {
-      setPointsLeft(0);
-    } else {
-      setPointsLeft(30 - totalAssignedPoints);
-    }
-  }, [stats]);
+    setPointsLeft(user?.character_points);
+  }, [user]);
 
   useEffect(() => {
     const getStatistics = async () => {
@@ -48,7 +37,10 @@ const Statistics: FunctionComponent = () => {
         const docRef = doc(db, "users", user?.uid);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          setStats(docSnap.data().stats);
+          const statsArr: any = Object.entries(docSnap.data().stats).map(
+            ([i, stats]) => stats
+          );
+          setStats(statsArr);
         }
       } catch (error) {
         console.log(error);
@@ -60,11 +52,14 @@ const Statistics: FunctionComponent = () => {
       return;
     }
   }, [user]);
-  const updateDataInDb = async () => {
+  const updateStatsinDb = async () => {
     const docRef = doc(db, "users", user?.uid);
     try {
       await updateDoc(docRef, {
         stats,
+      });
+      await updateDoc(docRef, {
+        character_points: pointsLeft,
       });
       setNotification({
         message: languagePacks.notifications?.stats_success[langCode],
@@ -92,19 +87,25 @@ const Statistics: FunctionComponent = () => {
           <div className="points-left">
             {languagePacks.headers?.points_left[langCode]}: {pointsLeft}
           </div>
-          {stats.map(({ abbr, points }) => (
-            <StatisticsItem
-              key={abbr}
-              abbr={abbr}
-              points={points}
-              pointsLeft={pointsLeft}
-              setStatistics={setStats}
-              setPointsLeft={setPointsLeft}
-            />
-          ))}
+          {stats.map(({ abbr, points }) => {
+            if (abbr === "luck" || abbr === "dmg" || abbr === "def") {
+              return null;
+            } else {
+              return (
+                <StatisticsItem
+                  key={abbr}
+                  abbr={abbr}
+                  points={points}
+                  pointsLeft={pointsLeft}
+                  setStatistics={setStats}
+                  setPointsLeft={setPointsLeft}
+                />
+              );
+            }
+          })}
           <ButtonMui
             text={languagePacks.labels?.apply[langCode]}
-            onClick={updateDataInDb}
+            onClick={updateStatsinDb}
           />
         </div>
       )}
