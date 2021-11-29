@@ -87,3 +87,13 @@ a {
     }
   }
 }
+
+.center-wrapper {
+  width: 100%;
+  height: 100%;
+  flex-flow: column;
+  @include flex-center;
+  & span {
+    margin-top: 1.5rem;
+  }
+}
