@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { db } from "../../config/firebaseConfig";
-import TopBar from "../atoms/TopBar/TopBar";
 import {
   doc,
   setDoc,
@@ -14,6 +12,8 @@ import { getAuth, createUserWithEmailAndPassword } from "@firebase/auth";
 import { useLanguagePacks } from "../../hooks/useLanguagePacks";
 import { useLanguageSettings } from "../../hooks/useLanguageSettings";
 import { useUser } from "../../hooks/useUser";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
 
 const initialValues = {
   nickname: "",
@@ -80,6 +80,8 @@ const Registration = () => {
   const isLogged = useUser();
   const [user, setUser] = useState(initialValues);
 
+  const usersFromDatabase: any[] = [];
+
   const { nickname, email, password } = user;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,17 +92,14 @@ const Registration = () => {
     });
   };
 
-  const [usernameExists, setUsernameExists] = useState<Boolean>(false);
-
   const checkUserNameInDb = async (username: string) => {
     const existingUser = query(collection(db, "users"));
     const allUsers = await getDocs(existingUser);
 
     allUsers.docs.forEach((user) => {
-      if (username === user.data().name) {
-        return setUsernameExists(true);
-      }
+      usersFromDatabase.push(user.data().name);
     });
+    return usersFromDatabase;
   };
 
   const createUser = (e: React.FormEvent<HTMLFormElement>) => {
@@ -122,40 +121,62 @@ const Registration = () => {
 
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    checkUserNameInDb(user.nickname);
-    if (usernameExists === true) {
+    let isUserInDatabase: boolean = false;
+    const usersExistingInDatabase = await checkUserNameInDb(user.nickname);
+    usersExistingInDatabase.map((playerName) => {
+      if (playerName === user.nickname) {
+        return (isUserInDatabase = true);
+      }
+      return 0;
+    });
+    if (isUserInDatabase) {
       alert(
-        `Uzytkownik o nazwie ${nickname} juz istnieje! Wybierz inną nazwę!`
+        `Uzytkownik o nazwie ${nickname} juz istnieje! Wybierz inną nazwę! /n Czekamy na zmergowanie Przemka errorów, eby je wymienić na lepsze, bo ten się nie podoba Marcinowi :(`
       );
+      setUser({ nickname: "", email: "", password: "", error: "" });
     } else {
       createUser(e);
     }
-    setUsernameExists(false);
+    isUserInDatabase = false;
   };
 
   return (
     <>
-      <TopBar title={language.headers?.register[langCode]} />
       {isLogged !== null ? (
         `${language.labels?.already_logged[langCode]} ${isLogged?.name}`
       ) : (
         <div className="content__wrapper">
-          <form className="" id="signUp-form" onSubmit={handleOnSubmit}>
+          <Box
+            component="form"
+            sx={{
+              width: "100%",
+            }}
+            noValidate
+            autoComplete="off"
+            className=""
+            id="signUp-form"
+            onSubmit={handleOnSubmit}
+          >
             <label htmlFor="">
-              {language.labels?.char_name[langCode]}:
-              <input
+              <TextField
+                label={language.labels?.char_name[langCode]}
+                variant="outlined"
+                size="small"
                 value={nickname}
                 type="text"
                 className="f"
                 name="nickname"
                 id="nickname"
                 required
+                style={{ paddingBottom: "10px", fontSize: "12px" }}
                 onChange={handleChange}
               />
             </label>
             <label htmlFor="">
-              {language.labels?.email[langCode]}:
-              <input
+              <TextField
+                label={language.labels?.email[langCode]}
+                variant="outlined"
+                size="small"
                 value={email}
                 type="email"
                 className=""
@@ -163,12 +184,15 @@ const Registration = () => {
                 autoComplete="username email"
                 id="signUp-email"
                 required
+                style={{ paddingBottom: "10px" }}
                 onChange={handleChange}
               />
             </label>
             <label htmlFor="">
-              {language.labels?.password[langCode]}:
-              <input
+              <TextField
+                label={language.labels?.password[langCode]}
+                variant="outlined"
+                size="small"
                 value={password}
                 type="password"
                 className=""
@@ -176,17 +200,32 @@ const Registration = () => {
                 name="password"
                 id="signUp-password"
                 required
+                style={{ paddingBottom: "10px" }}
                 onChange={handleChange}
               />
             </label>
-            <button type="submit" className="">
-              {language.buttons?.create_char[langCode]}!
-            </button>
-          </form>
-          <div className="user-action">
-            {language.labels?.has_account[langCode]}{" "}
-            <Link to="/login">{language.labels?.log_in[langCode]}</Link>
-          </div>
+            <br />
+            {nickname.length === 0 ||
+            password.length === 0 ||
+            email.length === 0 ? (
+              <button
+                type="submit"
+                className=""
+                style={{ padding: "5px 20px", border: "1px solid black" }}
+                disabled
+              >
+                {language.buttons?.create_char[langCode]}!
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className=""
+                style={{ padding: "5px 20px", border: "1px solid black" }}
+              >
+                {language.buttons?.create_char[langCode]}!
+              </button>
+            )}
+          </Box>
         </div>
       )}
     </>

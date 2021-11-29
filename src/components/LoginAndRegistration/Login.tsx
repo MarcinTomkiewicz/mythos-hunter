@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useLanguagePacks } from "../../hooks/useLanguagePacks";
 import { useLanguageSettings } from "../../hooks/useLanguageSettings";
-import TopBar from "../atoms/TopBar/TopBar";
 import { useUser } from "../../hooks/useUser";
 import { useNavigate } from "react-router-dom";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
 
 const initialValues = {
   email: "",
@@ -51,51 +51,60 @@ const Login = () => {
 
   return (
     <>
-      <TopBar title={language.headers?.login[langCode]} />
       {isLogged !== null ? (
         `${language.labels?.already_logged[langCode]} ${isLogged?.name}`
       ) : (
         <div className="content__wrapper">
-          <form
+          <Box
+            component="form"
+            sx={{
+              width: "100%",
+            }}
+            noValidate
+            autoComplete="off"
             className="registration__form login__form"
             id="logIn-form"
             onSubmit={handleOnSubmit}
           >
             <label htmlFor="logIn-email">
-              {language.labels?.email[langCode]}:
-              <input
+              <TextField
+                label={language.labels?.email[langCode]}
+                variant="outlined"
+                size="small"
                 type="email"
                 className="form__input"
                 name="email"
                 autoComplete="username email"
                 id="logIn-email"
                 required
+                style={{ paddingBottom: "10px" }}
                 onChange={handleChange}
               />
             </label>
             <label htmlFor="logIn-password">
-              {language.labels?.password[langCode]}:
-              <input
+              <TextField
+                label={language.labels?.password[langCode]}
+                variant="outlined"
+                size="small"
                 type="password"
                 className="form__input"
                 autoComplete="current-password"
                 name="password"
                 id="logIn-password"
+                style={{ paddingBottom: "10px" }}
                 required
                 onChange={handleChange}
               />
             </label>
-            <button type="submit" className="btn btn-green">
+            <br />
+            <button
+              type="submit"
+              className=""
+              style={{ padding: "5px 20px", border: "1px solid black" }}
+            >
               {language.buttons?.log_in[langCode]}!
             </button>
-          </form>
-
-          <div className="user-action">
-            {language.labels?.no_account[langCode]}{" "}
-            <Link to="/register">
-              {language.buttons?.create_char[langCode]}
-            </Link>
-          </div>
+          </Box>
         </div>
       )}
     </>
