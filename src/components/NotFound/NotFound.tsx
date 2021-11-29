@@ -13,7 +13,7 @@ const NotFound: FunctionComponent = () => {
       <div className="center-wrapper">
         <img
           src={soldier}
-          style={{ height: "350px" }}
+          style={{ height: "350px", marginTop: "-120px" }}
           alt={languagePacks.labels?.not_found[langCode]}
         />
       </div>
