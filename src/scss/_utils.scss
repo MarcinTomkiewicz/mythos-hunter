@@ -2,12 +2,16 @@ ul {
   list-style: none;
 }
 
-button {
+button,
+a {
   all: unset;
+  cursor: pointer;
+  font-family: inherit;
+  text-decoration: none;
+  outline: none;
 }
 
 .btn {
-  cursor: pointer;
   font-size: 1.4rem;
   padding: 0.8rem 1rem;
   transition: all 0.2s;
