@@ -3,6 +3,7 @@ import { useLanguageSettings } from "../../hooks/useLanguageSettings";
 import { useLanguagePacks } from "../../hooks/useLanguagePacks";
 import { StatisticsInterface } from "../../types/interfaces";
 import RoundButton from "../atoms/Buttons/RoundButton";
+import { useUser } from "../../hooks/useUser";
 
 interface StatisticsItemProps {
   abbr: string;
@@ -21,7 +22,7 @@ const StatisticsItem: FunctionComponent<StatisticsItemProps> = ({
 }) => {
   const languagePacks = useLanguagePacks();
   const langCode = useLanguageSettings();
-
+  const user = useUser();
   const handleIncreasePoints = () => {
     if (pointsLeft === 0) {
       return;
@@ -65,11 +66,13 @@ const StatisticsItem: FunctionComponent<StatisticsItemProps> = ({
           onClick={handleIncreasePoints}
           color="success"
         />
-        <RoundButton
-          iconName="remove_circle"
-          onClick={handleDecreasePoints}
-          color="error"
-        />
+        {user?.isStatsEdited ? null : (
+          <RoundButton
+            iconName="remove_circle"
+            onClick={handleDecreasePoints}
+            color="error"
+          />
+        )}
       </div>
     </div>
   );
