@@ -38,7 +38,7 @@ const Statistics: FunctionComponent = () => {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           const statsArr: any = Object.entries(docSnap.data().stats).map(
-            ([i, stats]) => stats
+            ([abbr, points]) => ({ abbr, points })
           );
           setStats(statsArr);
         }
@@ -54,12 +54,19 @@ const Statistics: FunctionComponent = () => {
   }, [user]);
   const updateStatsinDb = async () => {
     const docRef = doc(db, "users", user?.uid);
+    const statsObj = stats.reduce<Record<string, number>>((acc, curr) => {
+      acc[curr.abbr] = curr.points;
+      return acc;
+    }, {});
     try {
       await updateDoc(docRef, {
-        stats,
+        stats: statsObj,
       });
       await updateDoc(docRef, {
         character_points: pointsLeft,
+      });
+      await updateDoc(docRef, {
+        isStatsEdited: true,
       });
       setNotification({
         message: languagePacks.notifications?.stats_success[langCode],
