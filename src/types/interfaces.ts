@@ -5,7 +5,9 @@ export interface NotificationInterface {
   type: AlertColor;
 }
 
-export interface StatisticsInterface {
-  abbr: string;
-  points: number;
+export interface StatsInterface {
+  [key: string]: {
+    abbr: string;
+    points: number;
+  };
 }
