@@ -30,7 +30,6 @@ const createCharacter = async (uid: string, nickname: string) => {
     level: 1,
     nextLevel: 100,
     is_online: true,
-    isStatsEdited: false,
     name: nickname,
     gender: "none",
     role: "player",
