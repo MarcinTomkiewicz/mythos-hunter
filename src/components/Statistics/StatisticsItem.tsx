@@ -3,6 +3,7 @@ import { useLanguageSettings } from "../../hooks/useLanguageSettings";
 import { useLanguagePacks } from "../../hooks/useLanguagePacks";
 import { StatsInterface } from "../../types/interfaces";
 import RoundButton from "../atoms/Buttons/RoundButton";
+import Tooltip from "@mui/material/Tooltip";
 
 interface StatisticsItemProps {
   abbr: string;
@@ -53,9 +54,24 @@ const StatisticsItem: FunctionComponent<StatisticsItemProps> = ({
 
   return (
     <div className="stat-item">
-      <span className="stat-item__name">
-        {languagePacks.statistics?.[abbr][langCode]}
-      </span>
+      <Tooltip
+        componentsProps={{
+          tooltip: {
+            sx: {
+              fontFamily: "inherit",
+              fontSize: "1.4rem",
+              textAlign: "center",
+            },
+          },
+        }}
+        title="In esse exercitation fugiat excepteur laboris laborum commodo aliquip officia sint consectetur elit anim."
+        arrow
+        placement="top"
+      >
+        <span className="stat-item__name">
+          {languagePacks.statistics?.[abbr][langCode]}
+        </span>
+      </Tooltip>
       <div className="stat-item__wrapper">
         <div className="stat-item__points">{points}</div>
         <RoundButton
