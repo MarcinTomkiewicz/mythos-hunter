@@ -16,6 +16,7 @@ const Statistics: FunctionComponent = () => {
   const languagePacks = useLanguagePacks();
   const langCode = useLanguageSettings();
   const [stats, setStats] = useState<StatsInterface | null>(null);
+  const [initialStats, setInitialStats] = useState<StatsInterface | null>(null);
   const [notification, setNotification] = useState<NotificationInterface>({
     message: "",
     type: "warning",
@@ -41,6 +42,7 @@ const Statistics: FunctionComponent = () => {
             return acc;
           }, {});
           setStats(statsModified);
+          setInitialStats(statsModified);
         }
       } catch (error) {
         console.log(error);
@@ -57,7 +59,7 @@ const Statistics: FunctionComponent = () => {
     let statsInitObj;
     if (stats !== null) {
       statsInitObj = Object.entries(stats).reduce((acc: any, [abbr, stat]) => {
-        acc[abbr] = stats.points;
+        acc[abbr] = stat.points;
         return acc;
       }, {});
     }
@@ -67,9 +69,6 @@ const Statistics: FunctionComponent = () => {
       });
       await updateDoc(docRef, {
         character_points: pointsLeft,
-      });
-      await updateDoc(docRef, {
-        isStatsEdited: true,
       });
       setNotification({
         message: languagePacks.notifications?.stats_success[langCode],
@@ -88,60 +87,63 @@ const Statistics: FunctionComponent = () => {
   return (
     <>
       <TopBar title={languagePacks.headers?.statistics[langCode]} />
-      {stats === null ? (
-        <div className="center-wrapper">
-          <BallTriangleLoader size={60} />
-        </div>
-      ) : (
+      {stats !== null && initialStats !== null ? (
         <div className="content__wrapper">
           <div className="points-left">
             {languagePacks.headers?.points_left[langCode]}: {pointsLeft}
           </div>
           <StatisticsItem
-            abbr={stats.str.abbr}
-            points={stats.str.points}
+            abbr={stats?.str.abbr}
+            points={stats?.str.points}
+            initialPoints={initialStats?.str.points}
             pointsLeft={pointsLeft}
             setStats={setStats}
             setPointsLeft={setPointsLeft}
           />
           <StatisticsItem
-            abbr={stats.agi.abbr}
-            points={stats.agi.points}
+            abbr={stats?.agi.abbr}
+            points={stats?.agi.points}
+            initialPoints={initialStats?.agi.points}
             pointsLeft={pointsLeft}
             setStats={setStats}
             setPointsLeft={setPointsLeft}
           />
           <StatisticsItem
-            abbr={stats.tough.abbr}
-            points={stats.tough.points}
+            abbr={stats?.tough.abbr}
+            points={stats?.tough.points}
+            initialPoints={initialStats?.tough.points}
             pointsLeft={pointsLeft}
             setStats={setStats}
             setPointsLeft={setPointsLeft}
           />
           <StatisticsItem
-            abbr={stats.vit.abbr}
-            points={stats.vit.points}
+            abbr={stats?.vit.abbr}
+            points={stats?.vit.points}
+            initialPoints={initialStats?.vit.points}
             pointsLeft={pointsLeft}
             setStats={setStats}
             setPointsLeft={setPointsLeft}
           />
           <StatisticsItem
-            abbr={stats.int.abbr}
-            points={stats.int.points}
+            abbr={stats?.int.abbr}
+            points={stats?.int.points}
+            initialPoints={initialStats?.int.points}
             pointsLeft={pointsLeft}
             setStats={setStats}
             setPointsLeft={setPointsLeft}
           />
           <StatisticsItem
-            abbr={stats.perc.abbr}
-            points={stats.perc.points}
+            abbr={stats?.perc.abbr}
+            points={stats?.perc.points}
+            initialPoints={initialStats?.perc.points}
             pointsLeft={pointsLeft}
             setStats={setStats}
             setPointsLeft={setPointsLeft}
           />
           <StatisticsItem
-            abbr={stats.speed.abbr}
-            points={stats.speed.points}
+            abbr={stats?.speed.abbr}
+            points={stats?.speed.points}
+            initialPoints={initialStats?.speed.points}
             pointsLeft={pointsLeft}
             setStats={setStats}
             setPointsLeft={setPointsLeft}
@@ -150,6 +152,10 @@ const Statistics: FunctionComponent = () => {
             text={languagePacks.labels?.apply[langCode]}
             onClick={updateStatsinDb}
           />
+        </div>
+      ) : (
+        <div className="center-wrapper">
+          <BallTriangleLoader size={60} />
         </div>
       )}
       <Notification

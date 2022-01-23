@@ -1,59 +1,56 @@
 import React, { FunctionComponent } from "react";
 import { useLanguageSettings } from "../../hooks/useLanguageSettings";
 import { useLanguagePacks } from "../../hooks/useLanguagePacks";
-import { StatisticsInterface } from "../../types/interfaces";
+import { StatsInterface } from "../../types/interfaces";
 import RoundButton from "../atoms/Buttons/RoundButton";
-import { useUser } from "../../hooks/useUser";
 
 interface StatisticsItemProps {
   abbr: string;
   points: number;
+  initialPoints: number;
   pointsLeft: number;
-  setStatistics: React.Dispatch<React.SetStateAction<StatisticsInterface[]>>;
+  setStats: React.Dispatch<React.SetStateAction<StatsInterface | null>>;
   setPointsLeft: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const StatisticsItem: FunctionComponent<StatisticsItemProps> = ({
   abbr,
   points,
+  initialPoints,
   pointsLeft,
-  setStatistics,
+  setStats,
   setPointsLeft,
 }) => {
   const languagePacks = useLanguagePacks();
   const langCode = useLanguageSettings();
-  const user = useUser();
-  const handleIncreasePoints = () => {
-    if (pointsLeft === 0) {
-      return;
-    }
-    setStatistics((prevState) => {
-      return prevState.map((el) => {
-        if (abbr === el.abbr) {
-          return { ...el, points: el.points + 1 };
+  const handleChangePoints = (action: string) => {
+    setStats((prev): any => {
+      if (prev !== null) {
+        if (action === "inc") {
+          if (pointsLeft > 0) {
+            setPointsLeft((prev) => prev - 1);
+            return {
+              ...prev,
+              [abbr]: { ...prev[abbr], points: prev[abbr].points + 1 },
+            };
+          } else {
+            return prev;
+          }
         } else {
-          return el;
+          if (pointsLeft > 1 && points > initialPoints) {
+            setPointsLeft((prev) => prev + 1);
+            return {
+              ...prev,
+              [abbr]: { ...prev[abbr], points: prev[abbr].points - 1 },
+            };
+          } else {
+            return prev;
+          }
         }
-      });
+      }
     });
-    setPointsLeft((prevState) => prevState - 1);
   };
 
-  const handleDecreasePoints = () => {
-    if (points === 1) {
-      return;
-    }
-    setStatistics((prevState) => {
-      return prevState.map((el) => {
-        if (abbr === el.abbr) {
-          return { ...el, points: el.points - 1 };
-        } else {
-          return el;
-        }
-      });
-    });
-    setPointsLeft((prevState) => prevState + 1);
-  };
   return (
     <div className="stat-item">
       <span className="stat-item__name">
@@ -63,16 +60,14 @@ const StatisticsItem: FunctionComponent<StatisticsItemProps> = ({
         <div className="stat-item__points">{points}</div>
         <RoundButton
           iconName="add_circle"
-          onClick={handleIncreasePoints}
+          onClick={() => handleChangePoints("inc")}
           color="success"
         />
-        {user?.isStatsEdited ? null : (
-          <RoundButton
-            iconName="remove_circle"
-            onClick={handleDecreasePoints}
-            color="error"
-          />
-        )}
+        <RoundButton
+          iconName="remove_circle"
+          onClick={() => handleChangePoints("dec")}
+          color="error"
+        />
       </div>
     </div>
   );
