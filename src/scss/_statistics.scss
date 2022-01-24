@@ -1,0 +1,21 @@
+.points-left {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 35%;
+  &:not(:last-child) {
+    margin-bottom: 2rem;
+  }
+  &__name,
+  &__points {
+    margin-right: 1rem;
+  }
+  &__wrapper {
+    display: flex;
+  }
+}
