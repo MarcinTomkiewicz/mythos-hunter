@@ -29,7 +29,7 @@ const StatisticsItem: FunctionComponent<StatisticsItemProps> = ({
       if (prev !== null) {
         if (action === "inc") {
           if (pointsLeft > 0) {
-            setPointsLeft((prev) => prev - 1);
+            setPointsLeft(pointsLeft - 1);
             return {
               ...prev,
               [abbr]: { ...prev[abbr], points: prev[abbr].points + 1 },
@@ -38,8 +38,8 @@ const StatisticsItem: FunctionComponent<StatisticsItemProps> = ({
             return prev;
           }
         } else {
-          if (pointsLeft > 1 && points > initialPoints) {
-            setPointsLeft((prev) => prev + 1);
+          if (pointsLeft >= 0 && points > initialPoints) {
+            setPointsLeft(pointsLeft + 1);
             return {
               ...prev,
               [abbr]: { ...prev[abbr], points: prev[abbr].points - 1 },
