@@ -4,12 +4,10 @@ import { db } from "../../config/firebaseConfig";
 import { useLanguagePacks } from "../../hooks/useLanguagePacks";
 import { useLanguageSettings } from "../../hooks/useLanguageSettings";
 import { useUser } from "../../hooks/useUser";
-import { StatsInterface, NotificationInterface } from "../../types/interfaces";
+import { StatsInterface } from "../../types/interfaces";
 import StatisticsItem from "./StatisticsItem";
 import TopBar from "../atoms/TopBar/TopBar";
 import ButtonMui from "../atoms/Buttons/ButtonMui";
-import Notification from "../atoms/Notification/Notification";
-import useNotification from "../../hooks/useNotification";
 import BallTriangleLoader from "../atoms/Loaders/BallTriangleLoader";
 
 const Statistics: FunctionComponent = () => {
@@ -17,13 +15,8 @@ const Statistics: FunctionComponent = () => {
   const langCode = useLanguageSettings();
   const [stats, setStats] = useState<StatsInterface | null>(null);
   const [initialStats, setInitialStats] = useState<StatsInterface | null>(null);
-  const [notification, setNotification] = useState<NotificationInterface>({
-    message: "",
-    type: "warning",
-  });
   const [pointsLeft, setPointsLeft] = useState(0);
   const user = useUser();
-  const [isNotificationOpen, toggleIsNotificationOpen] = useNotification();
 
   useEffect(() => {
     setPointsLeft(user?.character_points);
@@ -70,18 +63,8 @@ const Statistics: FunctionComponent = () => {
       await updateDoc(docRef, {
         character_points: pointsLeft,
       });
-      setNotification({
-        message: languagePacks.notifications?.stats_success[langCode],
-        type: "success",
-      });
-      toggleIsNotificationOpen();
     } catch (error) {
       console.log(error);
-      setNotification({
-        message: languagePacks.notifications?.error[langCode],
-        type: "error",
-      });
-      toggleIsNotificationOpen();
     }
   };
   return (
@@ -158,12 +141,6 @@ const Statistics: FunctionComponent = () => {
           <BallTriangleLoader size={60} />
         </div>
       )}
-      <Notification
-        message={notification.message}
-        type={notification.type}
-        isNotificationOpen={isNotificationOpen}
-        toggleIsNotificationOpen={toggleIsNotificationOpen}
-      />
     </>
   );
 };
