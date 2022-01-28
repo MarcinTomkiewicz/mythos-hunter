@@ -1,11 +1,28 @@
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormLabel from '@mui/material/FormLabel';
+
 interface AddItemGenderProps {
-  // itemValue: string,
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const AddItemGender = ({ handleChange }: AddItemGenderProps) => {
   return (
-    <div style={{paddingLeft: "10px", paddingRight: "10px"}}>
+<>
+<FormLabel id="demo-row-radio-buttons-group-label">Rodzaj</FormLabel>
+    <RadioGroup
+    aria-labelledby="gender"
+    defaultValue="none"
+    name="gender"
+    row
+    onChange={handleChange}
+  >
+    <FormControlLabel value="female" control={<Radio />} label="żeński" />
+    <FormControlLabel value="male" control={<Radio />} label="męski" />
+  </RadioGroup>
+
+    {/* <div style={{paddingLeft: "10px", paddingRight: "10px"}}>
       Rodzaj:{" "}
       <input
         type="radio"
@@ -23,6 +40,7 @@ export const AddItemGender = ({ handleChange }: AddItemGenderProps) => {
         onChange={handleChange}
       />
       żeński
-    </div>
+    </div> */}
+    </>
   );
 };

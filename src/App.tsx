@@ -9,6 +9,7 @@ import NotFound from "./components/NotFound/NotFound";
 import Chat from "./components/Chat/Chat";
 import ChallengesOfGods from "./components/ChallengesOfGods/ChallengesOfGods";
 import Armoury from "./components/Armoury/Armoury";
+import AdminPanel from "./components/AdminPanel/AdminPanel";
 
 const App: FunctionComponent = () => {
   return (
@@ -16,6 +17,7 @@ const App: FunctionComponent = () => {
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="armoury" element={<Armoury />} />
+        <Route path="admin" element={<AdminPanel />} /> 
         <Route path="character-view" element={<CharacterView />} />
         <Route path="statistics" element={<Statistics />} />
         <Route path="challenges-of-gods" element={<ChallengesOfGods />} />

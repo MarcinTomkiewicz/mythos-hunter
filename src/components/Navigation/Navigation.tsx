@@ -29,7 +29,7 @@ const Navigation: FunctionComponent = () => {
 
     if (user?.role === "admin") {
       setLinks([
-        <NavLink to="/admin-panel">
+        <NavLink to="/admin">
           {languagePacks.headers?.admin_panel[langCode]}
         </NavLink>,
         ...userLinks,
@@ -48,12 +48,6 @@ const Navigation: FunctionComponent = () => {
           <NavLink to="/">Home</NavLink>
         </li>
         <li className="navigation__item">
-          <NavLink to="/admin">{languagePacks.headers?.admin_panel[langCode]}</NavLink>
-        </li>
-        <li className="navigation__item">
-          <NavLink to="/armoury">
-            {languagePacks.headers?.armoury[langCode]}
-            </NavLink>
           <NavLink to="/about">
             {languagePacks.headers?.about[langCode]}
           </NavLink>
