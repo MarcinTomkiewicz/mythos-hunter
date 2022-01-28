@@ -2,12 +2,16 @@ ul {
   list-style: none;
 }
 
-button {
+button,
+a {
   all: unset;
+  cursor: pointer;
+  font-family: inherit;
+  text-decoration: none;
+  outline: none;
 }
 
 .btn {
-  cursor: pointer;
   font-size: 1.4rem;
   padding: 0.8rem 1rem;
   transition: all 0.2s;
@@ -32,6 +36,7 @@ button {
 }
 
 .top-bar {
+  height: 35px;
   background-color: $color-primary;
   padding: 0.5rem;
   color: $color-white;
@@ -48,5 +53,47 @@ button {
     background-repeat: no-repeat;
     width: 2.8rem;
     height: 1.9rem;
+  }
+}
+
+.btn-mui {
+  font-size: 1.2rem;
+  font-family: inherit;
+}
+
+.btn-round {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown {
+  display: block;
+  top: 130%;
+  right: 0;
+  position: absolute;
+  min-width: 15rem;
+  background-color: #f5f5f5;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  &__list {
+    font-size: 1.4rem;
+  }
+  &__item {
+    padding: 1rem;
+    cursor: pointer;
+    &:hover {
+      background-color: #ebebeb;
+    }
+  }
+}
+
+.center-wrapper {
+  width: 100%;
+  height: 100%;
+  flex-flow: column;
+  @include flex-center;
+  & span {
+    margin-top: 1.5rem;
   }
 }
