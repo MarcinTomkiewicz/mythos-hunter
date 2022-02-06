@@ -1,5 +1,5 @@
 import { getAuth, signOut } from "firebase/auth";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { useLanguagePacks } from "../../hooks/useLanguagePacks";
 import { useLanguageSettings } from "../../hooks/useLanguageSettings";
 
