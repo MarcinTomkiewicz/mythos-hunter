@@ -21,15 +21,14 @@ export const useLanguagePacks = () => {
 
   useEffect(() => {
     const languageArrays: any = [];
-    packNames.forEach((document) => {
-      const getLanguagesFromDB = async () => {
+    if (packNames.length !== 0) {
+      packNames.forEach(async (document) => {
         const docRef = doc(db, "language_packs", document);
         const docSnap = await getDoc(docRef);
         languageArrays.push([document, docSnap.data()]);
         setLanguagePacks(Object.fromEntries(languageArrays));
-      };
-      getLanguagesFromDB();
-    });
+      });
+    }
   }, [packNames]);
 
   return languagePacks;
