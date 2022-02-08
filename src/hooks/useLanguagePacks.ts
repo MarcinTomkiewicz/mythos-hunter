@@ -1,35 +1,21 @@
 import { useEffect, useState } from "react";
 import { db } from "../config/firebaseConfig";
-import { collection, query, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 
 export const useLanguagePacks = () => {
   const [languagePacks, setLanguagePacks] = useState<any>({});
-  const [packNames, setPackNames] = useState<string[]>([]);
 
   useEffect(() => {
-    const getPackNames = async () => {
-      const collectDataFromDB = query(collection(db, "language_packs"));
-      const dataFromDB: string[] = [];
-      const documents = await getDocs(collectDataFromDB);
-      documents.docs.forEach((document) => {
-        dataFromDB.push(document.id);
+    const getLanguagePacks = async () => {
+      const querySnapshot = await getDocs(collection(db, "language_packs"));
+      querySnapshot.forEach((doc) => {
+        setLanguagePacks((prev: any) => {
+          return { ...prev, [doc.id]: doc.data() };
+        });
       });
-      setPackNames(dataFromDB);
     };
-    getPackNames();
+    getLanguagePacks();
   }, []);
-
-  useEffect(() => {
-    const languageArrays: any = [];
-    if (packNames.length !== 0) {
-      packNames.forEach(async (document) => {
-        const docRef = doc(db, "language_packs", document);
-        const docSnap = await getDoc(docRef);
-        languageArrays.push([document, docSnap.data()]);
-        setLanguagePacks(Object.fromEntries(languageArrays));
-      });
-    }
-  }, [packNames]);
 
   return languagePacks;
 };
